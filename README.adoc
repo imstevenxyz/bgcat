@@ -1,0 +1,98 @@
+:doctype: book
+:toc: macro
+:toc-title:
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 3
+
+image::docs/images/logo.svg[BGCat Logo,120,120,align="center"]
+[.text-center]
+[.big]#*BGCat*#
+
+[.text-center]
+BGCat, short for Boardgame Catalog, is a web app for displaying your magnificent boardgame collection to your friends. With the search and filter features you and your friends can effortlessly find the game to play!
+
+[.text-center]
+link:https://bgcat.imsteven.xyz/[demo] • link:#Installation[Get Started]
+
+image::docs/images/home.png[BGCat Homepage,align="center"]
+
+toc::[]
+
+== Installation
+
+=== Manual
+
+1. Install link:https://surrealdb.com/install[SurrealDB]
+2. Install BGCat
+.. Download the latest release and unpack in a directory of your choosing
+.. Configure BGCat, see link:#Configuration[below]
+3. Start BGCat
+
+=== Container
+
+Supported architectures:
+
+* linux/amd64
+* linux/arm64
+
+[source, bash]
+----
+# Docker
+docker run --detach --restart=always \
+    -e BGCAT_ADMIN_TOKEN="a_good_password" \
+    -e BGCAT_SECRET="super_secret_cookie_that_should_be_really_long" \
+    -p 8000:8000 \
+    -v </your/local/data>:/app/data \
+    registry.imsteven.xyz/lib/bgcat:latest
+
+# Or if prefered podman
+podman run --detach --restart=always \
+    -e BGCAT_ADMIN_TOKEN="a_good_password" \
+    -e BGCAT_SECRET="super_secret_cookie_that_should_be_really_long"
+    -p 8000:8000 \
+    -v </your/local/data>:/app/data \
+    registry.imsteven.xyz/lib/bgcat:latest
+----
+
+By default the container will run with user uid and gid 65534 (nobody). Running with an arbritrary id is possible using `--user {uid}:{gid}`. Make sure this matches the ownership of your local data directory.
+
+The images include a local installation of SurrealDB. To use this instance don't change the db_start_local and db_cmd configuration options!
+
+=== Helm
+
+TODO
+
+=== Build manually
+
+Check out the link:docs/building.adoc[building docs]
+
+== Configuration
+
+BGCat can be configured using a config file (`bgcat.toml`) or environment variables.
+Environment variables should be all uppercase and prefixed with `BGCAT_`, eg: `BGCAT_LOG_LEVEL`
+
+Possible options:
+[grid:"rows", format="csv"]
+[options:"header"]
+|===
+Option, Description, Default
+
+admin_token, The token for the admin interface,
+secret, Secret token used for session cookie,
+adr, Address to listen on, `0.0.0.0`
+port, Port to listen on, `8000`
+default_page_limit, The default limit of items to show per page, `8`
+db_start_local, Wether to start a local SurrealDB instance, `true`
+db_cmd, SurrealDB command to start local instance, `surreal`
+db_adr, The address of the database, `ws://localhost:8001`
+db_ns, Database namespace, `bgcat`
+db_name, Database name, `bgcat`
+db_user, Database authentication username, `root`
+db_pass, Database authentication password, `root`
+log_level, "The log level to show in console (`error`, `warn`, `info`, `debug`)", `info`
+|===
+
+== Good to know
+
+TODO
