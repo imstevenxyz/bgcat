@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/bg_form.css?v={{ css_ver }}">
+{% endblock head %}
+{% block content %}
+<section id="main">
+  <h2 class="structural">Main Content</h2>
+  <div class="wrapper">
+    <section id="content">
+      <h3 class="structural">{% if formtype == "update" %}Update boardgame{% else %}Create boardgame{% endif %}</h3>
+      <div id="form-container">
+        {% if form.image_url %}
+        <div id="bg-form-img">
+          <img src="/{{ form.image_url }}" alt="{{ form.title }}"/>
+        </div>
+        {% endif %}
+        <form id="bg-form" method="post" action="" enctype="multipart/form-data">
+          <div>
+            <label for="title">Title:</label>
+            <input id="title" name="title" type="text" aria-label="title" required value="{{ form.title }}">
+          </div>
+          <div>
+            <label>Players:</label>
+            <input id="min-players" name="min_players" type="number" min="0" placeholder="min" aria-label="minimum players" required value="{{ form.min_players }}">
+            &mdash;
+            <input id="max-players" name="max_players" type="number" min="0" placeholder="max" aria-label="maximum players" required value="{{ form.max_players }}">
+            <label for="players-no-limit">(+)</label><input id="players-no-limit" name="players_no_limit" type="checkbox" aria-label="Unlimited max players" {% if form.players_no_limit %} checked {% endif %}>
+          </div>
+          <div>
+            <label>Playtime (minutes):</label>
+            <input id="min-playtime" name="min_playtime" type="number" min="0" placeholder="min" aria-label="playtime" required value="{{ form.min_playtime }}">
+            &mdash;
+            <input id="max-playtime" name="max_playtime" type="number" min="0" placeholder="max" aria-label="playtime" required value="{{ form.max_playtime }}">
+            <label for="playtime-no-limit">(+)</label><input id="playtime-no-limit" name="playtime_no_limit" type="checkbox" aria-label="Unlimited max playtime" {% if form.playtime_no_limit %} checked {% endif %}>
+          </div>
+          <div>
+            <label for="image">Select image:</label>
+            <input id="image" name="image" type="file" accept="image/png, image/jpeg, image/webp" aria-label="select image">
+          </div>
+          <div id="exp-container" exp-count="{{ form.expansions | length }}">
+            {% for expansion in form.expansions %}
+            <div class="exp">
+              <h4>Expansion: </h4>
+              <div>
+                <label for="exp-title">Title:</label>
+                <input id="exp-title" name="expansions[][title]" type="text" required value="{{ expansion.title }}">
+              </div>
+              <div>
+                <label>Players:</label>
+                <input id="exp-min-players" name="expansions[][min-player]" type="number" min="0" placeholder="min" aria-label="minimum players" required value="{{ expansion.min_players }}">
+                &mdash;
+                <input id="exp-max-players" name="expansions[][max-player]" type="number" min="0" placeholder="max" aria-label="maximum players" required value="{{ expansion.max_players }}">
+              </div>
+              <div id="exp-del-control">
+                <label for="exp-del">Mark for deletion</label>
+                <input id="exp-del" name="expansions[][meta-del-expansion]" type="checkbox" aria-label="mark to delete" value="{{ loop.index0 }}">
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div id="control">
+            <div id="exp-control">
+              <label for="exp-add">Select to add expansion</label>
+              <input id="exp-add" name="meta_add_expansion" type="checkbox" aria-label="select to add expansion">
+            </div>
+            <button type="submit">{% if formtype == "update" %}Update boardgame{% else %}Create boardgame{% endif %}</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock content %}
+{% block script %}
+<script src="/static/js/bg_form.js"></script>
+{% endblock script %}

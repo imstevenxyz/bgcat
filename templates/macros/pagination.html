@@ -1,0 +1,25 @@
+{% macro paginate(id, page, page_count, item_limit, query) %}
+<nav class="pagination" id="{{ id }}" limit="{{ item_limit }}" initial-page="{{ page }}" page-count="{{ page_count }}">
+  {% set hidden = "" %}
+  {% if page_count == 1 %}
+    {% set hidden = "hidden" %}
+  {% endif %}
+  <a class="pagination-button {{ hidden }}" id="pagination-first" {% if page > 0 %} href="?{{ query }}&page=0" {% endif %} title="First page" aria-label="first page">
+    &laquo;
+  </a>
+  <a class="pagination-button {{ hidden }}" id="pagination-prev" {% if page > 0 %} href="?{{ query }}&page={{ page - 1 }}" {% endif %} title="Previous page" aria-label="previous page">
+    &lsaquo;
+  </a>
+  <div id="pagination-numbers">
+    {%- for i in range(start=0, end=page_count) -%}
+    <a class="pagination-number {% if i == page %} active {% endif %}" href="?{{ query }}&page={{ i }}" pagination-index="{{ i }}" title="Page {{ i }}" aria-label="page {{ i }}">{{ i }}</a>
+    {%- endfor -%}
+  </div>
+  <a class="pagination-button {{ hidden }}" id="pagination-next" {% if page < page_count - 1 %} href="?{{ query }}&page={{ page + 1 }}" {% endif %} title="Next page" aria-label="next page">
+    &rsaquo;
+  </a>
+  <a class="pagination-button {{ hidden }}" id="pagination-last" {% if page < page_count - 1 %} href="?{{ query }}&page={{ page_count - 1 }}" {% endif %} title="Last page" aria-label="last page">
+    &raquo;
+  </a>
+</nav>
+{% endmacro input %}

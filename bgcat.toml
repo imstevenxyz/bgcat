@@ -1,0 +1,13 @@
+secret = "super_secret_token_that_should_be_really_long"
+admin_token = "a_good_password"
+adr = "0.0.0.0"
+port = 8000
+default_page_limit = 8
+db_start_local = true
+db_cmd = "surreal"
+db_adr = "ws://localhost:8001"
+db_ns = "bgcat"
+db_name = "bgcat"
+db_user = "root"
+db_pass = "root"
+log_level = "info"

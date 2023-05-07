@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html class="theme-auto">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BGCat - {{ status_code }}</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/css/base.css?v={{ css_ver }}">
+  </head>
+  <body>
+    <section id="main">
+      <h2 class="structural">Main Content</h2>
+      <div class="wrapper">
+        <img id="error-logo" src="/static/logo.svg" alt="BGCat logo"/>
+        <section id="error-page">
+          <h3>{{ status_code }}</h3>
+          <p>{{ status_msg }}</p>
+          <form action="/">
+            <button type="submit">Go Home</button>
+          </form>
+        </section>
+      </div>
+    </section>
+  </body>
+</html>

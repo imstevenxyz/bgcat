@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="theme-auto">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BGCat</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link defer rel="stylesheet" href="/static/vendor/fontawesome/css/fontawesome.min.css">
+    <link defer rel="stylesheet" href="/static/vendor/fontawesome/css/regular.min.css">
+    <link defer rel="stylesheet" href="/static/vendor/fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="/static/css/base.css?v={{ css_ver }}">
+    {% block head %}
+    {% endblock head %}
+  </head>
+  <header>
+    <div id="head" class="wrapper clearfix">
+      <img src="/static/logo.svg" alt="BGCat logo"/>
+      <h1><a href="/">Boardgame Cat</a></h1>
+    </div>
+    <div id="overlay">
+      <div id="nav" class="wrapper">
+        <div id="start">
+        </div>
+        <div id="end">
+          <a class="navitem" id="theme-toggle" aria-label="switch theme" title="Switch theme" onclick="toggleTheme()">
+            <i id="theme-icon" class="fas fa-adjust fa-fw"></i>
+          </a>
+          {% if search %}
+          <div class="navitem" id="search-bar" title="Search">
+            <form type="get" action="">
+              <input id="search" type="text" name="search" aria-label="search" value="{{ query.search }}">
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+  <body>
+    {% block content %}
+    {% endblock content %}
+  </body>
+  <footer>
+    <div class="wrapper">
+      <p>BGCat</p>
+      &nbsp;|
+      <p>Some images/icons are copyright to their respective owners</p>
+    </div>
+  </footer>
+  <script src="/static/js/theme.js"></script>
+  {% block script %}
+  {% endblock script %}
+</html>

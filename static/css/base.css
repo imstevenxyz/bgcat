@@ -1,0 +1,490 @@
+/*
+    THEME
+*/
+
+:root, html.theme-light {
+ --highlight-primary: #3367d6;
+ --highlight-secondary: #4285f4;
+ --highlight-hover: #5a95f5;
+ --background: #f5f5f5;
+ --background-item: #c8c8c8;
+ --background-good: #4caf50;
+ --background-warning: #dc3545;
+ --text: #363636;
+ --text-header: #ffffff;
+ --text-title: #303030;
+ --text-subtitle: #424242;
+ --text-form: #000000;
+ --loader-one: #0000FF;
+ --loader-two: #00FF00;
+ --loader-three: #FF0000;
+}
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+    :root, html {
+        --highlight-primary: #3367d6;
+        --highlight-secondary: #4285f4;
+        --highlight-hover: #5a95f5;
+        --background: #f5f5f5;
+        --background-item: #c8c8c8;
+        --background-good: #4caf50;
+        --background-warning: #dc3545;
+        --text: #363636;
+        --text-header: #ffffff;
+        --text-title: #303030;
+        --text-subtitle: #424242;
+        --text-form: #000000;
+        --loader-one: #0000FF;
+        --loader-two: #00FF00;
+        --loader-three: #FF0000;
+    }
+}
+
+html.theme-dark {
+    --highlight-primary: #3367d6;
+    --highlight-secondary: #4285f4;
+    --highlight-hover: #5a95f5;
+    --background: #131313;
+    --background-item: #2b2b2b;
+    --background-good: #4caf50;
+    --background-warning: #dc3545;
+    --text: #eaeaea;
+    --text-header: #ffffff;
+    --text-title: #fafafa;
+    --text-subtitle: #f5f5f5;
+    --text-form: #000000;
+    --loader-one: #0000FF;
+    --loader-two: #00FF00;
+    --loader-three: #FF0000;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root, html {
+        --highlight-primary: #3367d6;
+        --highlight-secondary: #4285f4;
+        --highlight-hover: #5a95f5;
+        --background: #131313;
+        --background-item: #2b2b2b;
+        --background-good: #4caf50;
+        --background-warning: #dc3545;
+        --text: #eaeaea;
+        --text-header: #ffffff;
+        --text-title: #fafafa;
+        --text-subtitle: #f5f5f5;
+        --text-form: #000000;
+        --loader-one: #0000FF;
+        --loader-two: #00FF00;
+        --loader-three: #FF0000;
+    }
+}
+
+/*
+    RESET
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+}
+
+/*
+    BODY STRUCTURE
+*/
+
+html{
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: var(--background);
+    color: var(--text);
+    font-size: 1.6rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.structural {
+    left: -9999px;
+    position: absolute;
+}
+
+.wrapper{
+    margin: 0 auto;
+    max-width: 150rem;
+    min-width: 32rem;
+    padding: 0 2rem;
+}
+
+/*
+    HEADER
+*/
+
+header {
+    background-color: var(--highlight-primary);
+    color: var(--text-header);
+}
+
+header #head{
+    height: 9rem;
+    line-height: 9rem;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+header img {
+    height: 80%;
+    vertical-align: middle;
+    align-self: center;
+}
+
+header h1{
+    font-size: 3.5rem;
+}
+
+header h1 a{
+    text-decoration: none;
+    color: inherit;
+}
+
+@media screen and (max-width: 600px) {
+    header h1{
+        font-size: 3rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    header h1{
+        font-size: 2.5rem;
+    }
+}
+
+header #overlay {
+    background-color: var(--highlight-secondary);
+    color: var(--text-header);
+}
+
+header #nav {
+    height: 5rem;
+    line-height: 5rem;
+    display: flex;
+    align-items: stretch;
+}
+
+header #start {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+
+header #end {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+header .navitem {
+    display: block;
+    padding: 0 1rem;
+}
+
+header .navitem:last-child {
+    padding: 0 0 0 1rem;
+}
+
+header a.navitem {
+    cursor: pointer;
+}
+
+header a.navitem:hover {
+    color: var(--text-header);
+    background-color: var(--highlight-hover);
+}
+
+/*
+    CONTENT
+*/
+
+#main{
+    /* viewport - header - overlay - footer */
+    min-height: calc(100vh - 9rem - 5rem - 3rem);
+}
+
+#content{
+    display: block;
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: fit-content;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+
+    position: absolute;
+    z-index: 1;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*
+    FOOTER
+*/
+
+footer{
+    background-color: var(--highlight-primary);
+    line-height: 3rem;
+    padding-left: 2rem;
+    color: var(--text-header)
+}
+
+footer p{
+    font-size: 1.5rem;
+    display: inline-block;
+}
+
+/*
+    ERROR PAGE
+*/
+
+#error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    height: 100vh;
+    color: var(--text);
+    text-align: center;
+    font-size: 5rem;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+}
+
+#error-page button {
+    margin-top: 3rem;
+    background-color: var(--highlight-hover);
+}
+
+#error-logo {
+    margin: 2rem auto;
+    height: 100vh;
+    width: 80vw;
+    max-width: 40rem;
+    opacity: 0.2;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    right: 0;
+}
+
+/*
+    FORM
+*/
+
+button, input, select {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 3rem;
+    color: var(--text-form);
+    box-sizing: border-box;
+    border: none;
+    margin: 0 0.5rem;
+    padding: 0 1rem;
+}
+
+button {
+    width: fit-content;
+}
+
+button:hover {
+    filter: brightness(90%);
+}
+
+button:active {
+    filter: brightness(75%);
+}
+
+input[type="text"] {
+    cursor: text;
+}
+
+input[type="file"] {
+    color: var(--text);
+}
+
+input[type="checkbox"] + label {
+    cursor: pointer;
+    user-select: none;
+}
+
+label {
+    display: inline-block;
+    height: 3rem;
+    line-height: 3rem;
+    margin-right: 0.5rem;
+}
+
+/*
+    SEARCH BAR
+*/
+
+#search-bar {
+    position: relative;
+    display: inline-block;
+}
+
+#search-bar input {
+    transition: all .1s linear;
+    color: var(--text-header);
+    background-color: var(--highlight-hover);
+    width: 100px;
+    padding-left: 3rem;
+}
+
+#search-bar input:focus {
+    width: 250px !important;
+    background-color: #fff;
+    color: var(--text-form)
+}
+
+#search-bar:before {
+    font-family: "Font Awesome 6 Free";
+    position: absolute;
+    content: "\f002";
+    font-weight: 900;
+    left: 2rem;
+    color: var(--text-header);
+}
+
+/*
+    PAGINATION
+*/
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pagination #pagination-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination a {
+    color: var(--text);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.pagination a.active {
+    background-color: var(--background-good);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: var(--highlight-hover);
+}
+
+.pagination a.hidden {
+    display: none;
+}
+
+/*
+    LOADING ANIMATION
+*/
+
+:root {
+    --loader-from: 0rem;
+    --loader-to: 8rem;
+}
+
+.loader.hidden,
+.loader.hidden + .loader-backdrop {
+    display: none;
+}
+
+.loader {
+    color: var(--loader-one);
+    width: var(--loader-to);
+    height: var(--loader-to);
+    display: inline-block;
+    position: relative;
+    animation: loader-color 2s linear 0s infinite;
+}
+
+.loader::before, .loader::after {
+    content: "";
+    border-radius: 100%;
+    box-shadow: 0 0 0 3px;
+    width: var(--loader-from);
+    height: var(--loader-from);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.loader::before {
+    animation: loader 2s linear 0s infinite;
+}
+
+.loader::after {
+    animation: loader 2s linear 1s infinite;
+}
+
+@keyframes loader {
+    from{
+        width: var(--loader-from);
+        height: var(--loader-from);
+        opacity: 1;
+    }
+    to{
+        width: var(--loader-to);
+        height: var(--loader-to);
+        opacity: 0;
+    }
+}
+
+@keyframes loader-color {
+    0%{color: var(--loader-one);}
+    50%{color: var(--loader-two);}
+    100%{color: var(--loader-three);}
+}
+
+
+/*
+    CLEARFIX
+*/
+
+.clearfix:after{
+    clear: both;
+    content: "";
+    display: table;
+}

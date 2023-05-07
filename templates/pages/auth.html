@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/auth.css?v={{ css_ver }}">
+{% endblock head %}
+{% block content %}
+<section id="main">
+  <h2 class="structural">Main Content</h2>
+  <div class="wrapper">
+    <section id="content">
+      <h3 class="structural">Authentication</h3>
+      <form id="auth" method="post" action="/admin">
+        <p>Please enter admin token to continue:</p>
+        <input type="password" autocomplete="password" name="token" placeholder="Enter admin token" autofocus="autofocus"><button type="submit">Enter</button>
+      </form>
+    </section>
+  </div>
+</section>
+{% endblock content %}

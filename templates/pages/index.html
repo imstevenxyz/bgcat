@@ -1,0 +1,84 @@
+{% import "macros/pagination.html" as pagination %}
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/index.css?v={{ css_ver }}">
+{% endblock head %}
+{% block content %}
+<section id="main">
+    <h2 class="structural">Main Content</h2>
+    <div class="wrapper">
+      <section id="content">
+        <h3 class="structural">Boardgames</h3>
+        <form id="query-reset" method="get" action="/"></form>
+        <form id="query" method="get">
+          <div>
+            <label for="sort-by">Sort by:</label>
+            <select id="sort-by" name="sort_by" required>
+              <option value="title" {% if query.sort_by == "title" %} selected {% endif %}>Title</option>
+              <option value="min_players" {% if query.sort_by == "min_players" %} selected {% endif %}>Minimum players</option>
+              <option value="max_players" {% if query.sort_by == "max_players" %} selected {% endif %}>Maximum players</option>
+              <option value="min_playtime" {% if query.sort_by == "min_playtime" %} selected {% endif %}>Minimum playtime</option>
+              <option value="max_playtime" {% if query.sort_by == "max_playtime" %} selected {% endif %}>Maximum playtime</option>
+            </select>
+            <input id="sort-direction" name="sort_direction" type="checkbox" value="desc" {% if query.sort_direction == "desc" %} checked {% endif %}>
+            <label for="sort-direction"></label>
+          </div>
+          &vert;
+          <label for="limit">limit:</label>
+          <input id="limit" class="number" name="limit" type="number" min="0" step="5" placeholder="#" aria-label="limit" value="{{ query.limit }}">
+          &vert;
+          <input type="checkbox" id="filters">
+          <label for="filters">filters</label>
+          &vert;
+          <button type="submit">
+            <i class="fa-solid fa-check"></i> apply
+          </button>
+          <button type="submit" form="query-reset">
+            <i class="fa-solid fa-xmark"></i> reset
+          </button>
+          <div id="query-filters">
+            <div>
+              <label for="filter-players">Players:</label>
+              <input class="number" id="filter-players" name="players" type="number" min="1" placeholder="#" aria-label="players" value="{{ query.players }}">
+            </div>
+            <div>
+              <label for="filter-min-playtime">Min playtime:</label>
+              <input class="number" id="filter-min-playtime" name="min_playtime" type="number" min="0" placeholder="min" aria-label="minimum players" value="{{ query.min_playtime }}">
+            </div>
+            <div>
+              <label for="filter-max-playtime">Max playtime:</label>
+              <input class="number" id="filter-max-playtime" name="max_playtime" type="number" min="0" placeholder="max" aria-label="maximum players" value="{{ query.max_playtime }}">
+            </div>
+          </div>
+        </form>
+        <div id="boardgame-container" aria-live="polite">
+          <div class="loader hidden" id="pagination-loader"></div>
+          <div class="loader-backdrop" id="pagination-loader-backdrop"></div>
+          {% for boardgame in boardgames %}
+          <article class="boardgame pagination-item" pagination-index="{{ query.page }}">
+            <a href="/boardgame/{{ boardgame.uid }}">
+              <h4>{{ boardgame.title }}</h4>
+              <img src="{{ boardgame.image_url }}" alt="{{ boardgame.title }}"/>
+              <ul class="info">
+                <li>
+                  <i class="fas fa-users"></i>
+                  {{ boardgame.min_players -}} {% if boardgame.min_players != boardgame.max_players %} &mdash; {{ boardgame.max_players -}} {% endif %} {%- if boardgame.players_no_limit -%} + {% endif %}
+                </li>
+                <li>
+                  <i class="far fa-clock"></i>
+                  {{ boardgame.min_playtime -}} {% if boardgame.min_playtime != boardgame.max_playtime %} &mdash; {{ boardgame.max_playtime -}} {% endif %} {%- if boardgame.playtime_no_limit -%} + {% endif %} min
+                </li>
+              </ul>
+            </a>
+          </article>
+          {% endfor%}
+        </div>
+        {{ pagination::paginate(id="pagination-bgs", page=query.page, page_count=pagination_count, item_limit=query.limit, query=query_string) }}
+      </section>
+    </div>
+</section>
+{% endblock content %}
+{% block script %}
+<script src="/static/js/pagination.js"></script>
+<script src="/static/js/index.js"></script>
+{% endblock script %}

@@ -1,0 +1,174 @@
+.pagination {
+    padding: 0 10rem;
+}
+
+#boardgame-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 2.5rem;
+    position: relative;
+    min-height: 20rem;
+}
+
+#boardgame-container article{
+    text-align: left;
+    width: 100%;
+    max-width: 30rem;
+    min-width: 20rem;
+    height: 40rem;
+    transition: 0.2s;
+}
+
+#boardgame-container article:hover {
+    transform: scale(1.02)
+}
+
+.boardgame {
+    color: var(--text);
+}
+
+.boardgame.hidden {
+    display: none;
+}
+
+.boardgame a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.boardgame h4 {
+    font-size: 2rem;
+    margin: 1rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.boardgame img {
+    width: 100%;
+    height: 23rem;
+    object-fit: contain;
+    border-radius: 0.8rem;
+    border: 1px #657b83 solid;
+    background: var(--background-item);
+    padding: 0.2rem;
+}
+
+.boardgame .info {
+    list-style: none;
+    font-size: 1.8rem;
+}
+
+.boardgame .info li {
+    margin: 0.5rem 0;
+}
+
+.boardgame .info i {
+    margin: 0 0.4rem;
+}
+
+form#query {
+    width: 100%;
+    text-align: right;
+}
+
+form#query button {
+    background-color: var(--background-good);
+}
+
+form#query button[form="query-reset"] {
+    background-color: var(--background-warning);
+}
+
+form#query div {
+    display: inline-block;
+}
+
+form#query #sort-direction {
+    display: none;
+}
+
+form#query #sort-direction + label::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.5rem;
+    content: "\f15d";
+}
+
+form#query #sort-direction + label::after {
+    content: "Asc";
+}
+
+form#query #sort-direction:checked + label::before {
+    content: "\f881";
+}
+
+form#query #sort-direction:checked + label::after {
+    content: "Desc";
+}
+
+form#query #filters {
+    display: none;
+}
+
+form#query #filters + label:before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f0d7";
+    margin: 0 0.5rem;
+}
+
+form#query #filters:checked + label:before {
+    content: "\f0d8";
+}
+
+form#query #query-filters {
+    display: inline-block;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 1s;
+    margin-top: 1rem;
+}
+
+form#query #filters:checked ~ #query-filters {
+    max-height: 20rem;
+}
+
+form#query #query-filters {
+    width: 100%;
+}
+
+form#query #query-filters div {
+    width: 100%;
+}
+
+form#query .number {
+    width: 10rem;
+}
+
+#pagination-loader {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+#pagination-loader-backdrop {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: inherit;
+    height: inherit;
+    background-color: var(--background);
+    opacity: 0.5;
+    z-index: 1;
+}

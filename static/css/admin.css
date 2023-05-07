@@ -1,0 +1,113 @@
+#menu {
+    text-align: left;
+}
+
+#menu form {
+    display: inline-block;
+}
+
+#menu #create {
+    background-color: var(--background-good);
+}
+
+#boardgame-container {
+    position: relative;
+}
+
+#boardgame-list {
+    list-style: none;
+    margin: 3rem 0;
+}
+
+.boardgame {
+    color: var(--text);
+    background-color: var(--background-item);
+    width: 80%;
+    max-width: 100rem;
+    box-shadow: 0 2px 15px 0 rgba(0,0,0,0.1);
+    border-radius: 0.4rem;
+    padding: 1.3rem;
+    display: flex;
+    align-items: stretch;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.boardgame.hidden {
+    display: none;
+}
+
+.boardgame #start {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.boardgame #end {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+.boardgame p {
+    line-height: 2rem;
+    margin: 0 1rem;
+}
+
+.boardgame h4 {
+    display: inline-block;
+    color: var(--text);
+    line-height: 2rem;
+    margin: 0 1rem;
+}
+
+.boardgame #uid {
+    display: inline-block;
+    font-size: 1rem;
+    color: gray;
+    user-select: all;
+}
+
+.boardgame #uid .tooltip {
+    user-select: none;
+}
+
+.boardgame #delete {
+    background-color: var(--background-warning);
+}
+
+.boardgame button {
+    min-width: 8rem;
+}
+
+.boardgame button i {
+    margin-right: 0.3rem;
+}
+
+#pagination-loader {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+#pagination-loader-backdrop {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: inherit;
+    height: inherit;
+    background-color: var(--background);
+    opacity: 0.5;
+    z-index: 1;
+}

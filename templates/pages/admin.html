@@ -1,0 +1,60 @@
+{% import "macros/pagination.html" as pagination %}
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/admin.css?v={{ css_ver }}">
+{% endblock head %}
+{% block content %}
+<section id="main">
+  <h2 class="structural">Main Content</h2>
+  <div class="wrapper">
+    <section id="content">
+      <div id="menu">
+        <h3 class="structural">Administration</h3>
+        <form action="/admin/new">
+          <button type="submit" id="create">
+            <i class="fas fa-plus"></i> Add Boardgame
+          </button>
+        </form>
+        <form action="/admin/export">
+          <button type="submit" id="export">
+            <i class="fas fa-file-export"></i> Export Database
+          </button>
+        </form>
+      </div>
+      <div id="boardgame-container">
+        <div class="loader hidden" id="pagination-loader"></div>
+        <div class="loader-backdrop" id="pagination-loader-backdrop"></div>
+        <ul id="boardgame-list">
+          {% for boardgame in boardgames %}
+          <li class="boardgame pagination-item" page-index="{{ query.page }}">
+            <div id="start">
+              <h4>{{ boardgame.title }}</h4>
+              <p id="uid" onclick="copyUid(this)">
+                {{ boardgame.uid }}<span class="tooltip">Copied!</span>
+              </p>
+            </div>
+            <div id="end">
+              <form action="/admin/edit/{{ boardgame.uid }}" method="get">
+                <button type="submit" id="edit">
+                  <i class="fas fa-edit"></i> edit
+                </button>
+              </form>
+              <form action="/admin/delete/{{ boardgame.uid }}" method="post">
+                <button type="submit" id="delete">
+                  <i class="fas fa-solid fa-trash"></i> delete
+                </button>
+              </form>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {{ pagination::paginate(id="pagination-bgs", page=query.page, page_count=pagination_count, item_limit=query.limit, query=query_string) }}
+    </section>
+  </div>
+</section>
+{% endblock content %}
+{% block script %}
+<script src="/static/js/pagination.js"></script>
+<script src="/static/js/admin.js"></script>
+{% endblock script %}
