@@ -6,10 +6,11 @@ ENV BGCAT_DB_CMD="/app/surreal"
 WORKDIR /app
 RUN apk add --no-cache curl libstdc++
 RUN curl --proto '=https' --tlsv1.2 -sSf https://install.surrealdb.com | sh -s -- --version $SURREAL_VERSION /app
+RUN rm /tmp/* && chown nobody:nobody surreal
 COPY static static
 COPY templates templates
 COPY builds/$TARGETARCH/release/bgcat .
 EXPOSE 8000
-VOLUME /app/data /app/data/assets
+VOLUME /app/data
 USER nobody
 ENTRYPOINT ["/app/bgcat"]
