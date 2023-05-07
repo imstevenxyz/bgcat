@@ -1,0 +1,4 @@
+*
+!templates/
+!static/
+!builds/*/release/bgcat

@@ -1,0 +1,14 @@
+FROM cgr.dev/chainguard/wolfi-base:latest
+ARG TARGETARCH
+ARG SURREAL="v1.0.0-beta.9+20230402"
+ENV BGCAT_DB_CMD="/app/surreal"
+WORKDIR /app
+RUN apk add --no-cache curl libstdc++
+RUN curl --proto '=https' --tlsv1.2 -sSf https://install.surrealdb.com | sh -s -- --version $SURREAL /app
+COPY static static
+COPY templates templates
+COPY builds/$TARGETARCH/release/bgcat .
+EXPOSE 8000
+VOLUME /app/data /app/data/assets
+USER nobody
+ENTRYPOINT ["/app/bgcat"]
