@@ -3,7 +3,7 @@
 :toc-title:
 :toclevels: 3
 :sectnums:
-:sectnumlevels: 3
+:sectnumlevels: 1
 
 image::docs/images/logo.svg[BGCat Logo,120,120,align="center"]
 [.text-center]
@@ -13,7 +13,7 @@ image::docs/images/logo.svg[BGCat Logo,120,120,align="center"]
 BGCat, short for Boardgame Catalog, is a web app for displaying your magnificent boardgame collection to your friends. With the search and filter features you and your friends can effortlessly find the game to play!
 
 [.text-center]
-link:https://bgcat.imsteven.xyz/[*Demo*] • link:#Installation[*Get Started*] 
+link:#Installation[*Get Started*] • link:https://bgcat.imsteven.xyz/[*Demo*] • link:https://bgcat.imsteven.xyz/api/v1/docs/[*API Docs*]
 
 image::docs/images/home.png[BGCat Homepage,align="center"]
 
@@ -80,19 +80,35 @@ Possible options:
 [grid:"rows", format="csv"]
 [options:"header"]
 |===
-Option, Description, Default
+Option, Description, Type, Default
 
-admin_token `required`, The token for the admin interface,
-secret `required`, Secret token used for session cookie,
-adr, Address to listen on, `0.0.0.0`
-port, Port to listen on, `8000`
-default_page_limit, The default limit of items to show per page, `8`
-db_start_local, Wether to start a local SurrealDB instance, `true`
-db_cmd, SurrealDB command to start local instance, `surreal`
-db_adr, The address of the database, `ws://localhost:8001`
-db_ns, Database namespace, `bgcat`
-db_name, Database name, `bgcat`
-db_user, Database authentication username, `root`
-db_pass, Database authentication password, `root`
-log_level, "The log level to show in console (`error`, `warn`, `info`, `debug`)", `info`
+admin_token, The token for the admin interface, string `required`,
+secret, Secret token used for session cookie, string `required`,
+adr, Address to listen on, string, `0.0.0.0`
+port, Port to listen on, u16, `8000`
+data_dir, The directory to store the assets and db file if applicable, string, `./data`
+webp_quality, The encoding quality to use when converting uploaded images, f32, `0.50`
+default_page_limit, The default limit of items to show per page, u32, `8`
+ui_page_limit_step, Step interval of the page limit input field, u32, `4`
+db_start_local, Wether to start a local SurrealDB instance, bool, `true`
+db_cmd, SurrealDB command to start local instance, string, `surreal`
+db_adr, The address of the database, string, `ws://localhost:8001`
+db_ns, Database namespace, string, `bgcat`
+db_name, Database name, string, `bgcat`
+db_user, Database authentication username, string, `root`
+db_pass, Database authentication password, string, `root`
+log_level, The log level to show in console, "string (`error`, `warn`, `info`, `debug`)", `info`
 |===
+
+== Usage
+
+=== Admin web interface
+
+The interface is available at the `/admin` endpoint, eg: `localhost:8000/admin`.
+
+Here you can create, delete and update your boardgames. Uploaded images are converted to webp and stored in the `assets` folder under your data directory.
+
+=== Rest API
+
+Swagger interface is available at `/api/v1/docs/`. +
+The openapi specification is available at `/api/v1/openapi.json`

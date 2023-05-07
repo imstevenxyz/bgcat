@@ -1,8 +1,9 @@
 use surrealdb::engine::any::Any;
 use surrealdb::opt::auth::Root;
-use surrealdb::{Error, Surreal};
+use surrealdb::Surreal;
 
 use crate::SETTINGS;
+use crate::prelude::GENResult;
 
 pub static DB: Surreal<Any> = Surreal::init();
 
@@ -12,7 +13,7 @@ pub struct SurrealDBRepo {
 }
 
 impl SurrealDBRepo {
-    pub async fn new() -> Result<Self, Error> {
+    pub async fn new() -> GENResult<Self> {
         DB.connect(&SETTINGS.db_adr).await?;
         DB.signin(Root {
             username: &SETTINGS.db_user,

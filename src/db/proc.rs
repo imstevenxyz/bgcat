@@ -17,27 +17,27 @@ impl Drop for ChildGuard {
     }
 }
 
-pub fn init_local_db() -> Option<ChildGuard> {
-    if !&SETTINGS.db_start_local {
-        return None
+pub fn init_local_db() -> GENResult<Option<ChildGuard>> {
+    match &SETTINGS.db_start_local {
+        false => Ok(None),
+        true => {
+            let db_proc = ChildGuard(spawn_local_db_proc()?);
+            wait_for_db_proc()?;
+            Ok(Some(db_proc))
+        }
     }
-    let db_proc = match spawn_local_db_proc() {
-        Err(why) => panic!("Failed starting local DB instance: {}", why),
-        Ok(db_proc) => ChildGuard(db_proc)
-    };
-    match wait_for_db_proc() {
-        Err(why) => panic!("Failed verifying local DB instance: {}", why),
-        Ok(_) => info!("Started local DB instance succesfully")
-    }
-    Some(db_proc)
 }
 
 fn spawn_local_db_proc() -> GENResult<Child> {
+    let db_file = format!("file:{}/bgcat.db", &SETTINGS.data_dir);
     let proc = Command::new(&SETTINGS.db_cmd)
-        .args(["start", "--user", &SETTINGS.db_user, "--pass", &SETTINGS.db_pass, "--bind", "127.0.0.1:8001", "file:data/bgcat.db"])
+        .args(["start", "--user", &SETTINGS.db_user, "--pass", &SETTINGS.db_pass, "--bind", "127.0.0.1:8001", &db_file])
         .stdout(Stdio::piped())
-        .spawn()?;
-    Ok(proc)
+        .spawn();
+    match proc {
+        Ok(proc) => Ok(proc),
+        Err(why) => Err(BGCError::InternalError(format!("Failed starting local DB instance: {}", why)))
+    }
 }
 
 fn wait_for_db_proc() -> GENResult<()> {
@@ -57,7 +57,7 @@ fn wait_for_db_proc() -> GENResult<()> {
             return Ok(())
         }
         if now.elapsed().as_secs() > timeout_sec {
-            return Err(BGCError::InternalError("isready timeout".to_string()))
+            return Err(BGCError::InternalError("Timeout when trying to connect to local DB instance".to_string()))
         }
         std::thread::sleep(sleep_sec);
     }

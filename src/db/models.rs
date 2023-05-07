@@ -24,7 +24,6 @@ pub struct BoardGame {
     #[serde(default)]
     pub expansions: Vec<BoardGameExpansion>,
     pub bgg_id: Option<String>,
-    pub exp_inc_players: Option<u8>,
 }
 
 #[derive(Serialize, Deserialize, ToSchema, Debug)]

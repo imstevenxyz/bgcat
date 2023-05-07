@@ -6,7 +6,14 @@ use std::{
 use actix_multipart::form::tempfile::TempFile;
 use mime::Mime;
 
+use crate::SETTINGS;
 use crate::{errors::BGCError, prelude::GENResult};
+
+pub fn setup_data_dir() -> GENResult<()> {
+    let assets_dir = format!("{}/assets", &SETTINGS.data_dir);
+    fs::create_dir_all(assets_dir)?;
+    Ok(())
+}
 
 pub fn verify_file_as_webp(file: &TempFile) -> GENResult<(&str, bool)> {
     let filename = get_file_name(file)?;
@@ -65,7 +72,7 @@ pub fn convert_img_to_webp(file: &Path) -> GENResult<PathBuf> {
     let image = image::io::Reader::open(file)?
         .with_guessed_format()?
         .decode()?;
-    let webp = webp::Encoder::from_image(&image)?.encode(0.25);
+    let webp = webp::Encoder::from_image(&image)?.encode(SETTINGS.webp_quality);
     let mut dest = PathBuf::from(file);
     dest.set_extension("webp");
     fs::write(&dest.as_path(), &*webp)?;

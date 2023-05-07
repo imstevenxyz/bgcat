@@ -25,7 +25,7 @@
           </div>
           &vert;
           <label for="limit">limit:</label>
-          <input id="limit" class="number" name="limit" type="number" min="0" step="5" placeholder="#" aria-label="limit" value="{{ query.limit }}">
+          <input id="limit" class="number" name="limit" type="number" min="0" step="{{ ui_page_limit_step  }}" placeholder="#" aria-label="limit" value="{{ query.limit }}">
           &vert;
           <input type="checkbox" id="filters">
           <label for="filters">filters</label>

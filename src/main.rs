@@ -7,6 +7,7 @@ pub mod web;
 
 use lazy_static::lazy_static;
 use log::{debug, info};
+use prelude::GENResult;
 
 use crate::db::proc::init_local_db;
 use crate::db::repo::SurrealDBRepo;
@@ -20,12 +21,13 @@ lazy_static! {
 }
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
+async fn main() -> GENResult<()> {
     Settings::setup_logger(&SETTINGS.log_level);
     debug!("Configuration: {:?}", *SETTINGS);
     info!("Running BGCAT: {}", settings::VERSION);
-    let db_proc = init_local_db();
-    let db_repo = SurrealDBRepo::new().await.unwrap();
+    utils::setup_data_dir()?;
+    let db_proc = init_local_db()?;
+    let db_repo = SurrealDBRepo::new().await?;
 
     server::server(&db_repo).await?;
     drop(db_proc);
@@ -41,6 +43,7 @@ fn setup_template_engine() -> tera::Tera {
 
 fn setup_template_context() -> tera::Context {
     let mut context = tera::Context::new();
+    context.insert("version", settings::VERSION);
     context.insert("css_ver", settings::VERSION);
     context.insert("js_ver", settings::VERSION);
     context
