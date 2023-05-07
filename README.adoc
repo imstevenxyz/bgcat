@@ -13,7 +13,7 @@ image::docs/images/logo.svg[BGCat Logo,120,120,align="center"]
 BGCat, short for Boardgame Catalog, is a web app for displaying your magnificent boardgame collection to your friends. With the search and filter features you and your friends can effortlessly find the game to play!
 
 [.text-center]
-link:https://bgcat.imsteven.xyz/[demo] • link:#Installation[Get Started]
+link:https://bgcat.imsteven.xyz/[*Demo*] • link:#Installation[*Get Started*] 
 
 image::docs/images/home.png[BGCat Homepage,align="center"]
 
@@ -25,9 +25,9 @@ toc::[]
 
 1. Install link:https://surrealdb.com/install[SurrealDB]
 2. Install BGCat
-.. Download the latest release and unpack in a directory of your choosing
+.. link:https://gitlab.com/imstevenxyz/bgcat/-/packages[Download] the latest release and unpack in a directory of your choosing
 .. Configure BGCat, see link:#Configuration[below]
-3. Start BGCat
+3. Run the `bgcat` binary, eg: `./bgcat`
 
 === Container
 
@@ -38,18 +38,9 @@ Supported architectures:
 
 [source, bash]
 ----
-# Docker
 docker run --detach --restart=always \
     -e BGCAT_ADMIN_TOKEN="a_good_password" \
     -e BGCAT_SECRET="super_secret_cookie_that_should_be_really_long" \
-    -p 8000:8000 \
-    -v </your/local/data>:/app/data \
-    registry.imsteven.xyz/lib/bgcat:latest
-
-# Or if prefered podman
-podman run --detach --restart=always \
-    -e BGCAT_ADMIN_TOKEN="a_good_password" \
-    -e BGCAT_SECRET="super_secret_cookie_that_should_be_really_long"
     -p 8000:8000 \
     -v </your/local/data>:/app/data \
     registry.imsteven.xyz/lib/bgcat:latest
@@ -65,12 +56,25 @@ TODO
 
 === Build manually
 
-Check out the link:docs/building.adoc[building docs]
+1. Install link:https://doc.rust-lang.org/cargo/getting-started/installation.html[Rust]
+2. Download this repo
+3. Build BGCat for your native architecture:
++
+[source, bash]
+----
+cargo build --release
+----
+4. Run the build binary:
++
+[source, bash]
+----
+./target/release/bgcat
+----
 
 == Configuration
 
 BGCat can be configured using a config file (`bgcat.toml`) or environment variables.
-Environment variables should be all uppercase and prefixed with `BGCAT_`, eg: `BGCAT_LOG_LEVEL`
+Environment variables should be all uppercase and prefixed with `BGCAT_`, eg: `BGCAT_ADMIN_TOKEN`
 
 Possible options:
 [grid:"rows", format="csv"]
@@ -78,8 +82,8 @@ Possible options:
 |===
 Option, Description, Default
 
-admin_token, The token for the admin interface,
-secret, Secret token used for session cookie,
+admin_token `required`, The token for the admin interface,
+secret `required`, Secret token used for session cookie,
 adr, Address to listen on, `0.0.0.0`
 port, Port to listen on, `8000`
 default_page_limit, The default limit of items to show per page, `8`
@@ -92,7 +96,3 @@ db_user, Database authentication username, `root`
 db_pass, Database authentication password, `root`
 log_level, "The log level to show in console (`error`, `warn`, `info`, `debug`)", `info`
 |===
-
-== Good to know
-
-TODO
