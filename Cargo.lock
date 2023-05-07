@@ -576,7 +576,7 @@ dependencies = [
 
 [[package]]
 name = "bgcat"
-version = "0.1.0-b3"
+version = "0.1.0-b1"
 dependencies = [
  "actix-files",
  "actix-multipart",

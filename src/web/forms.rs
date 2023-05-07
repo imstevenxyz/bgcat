@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 use crate::db::models::{BoardGame, BoardGameExpansion};
 use crate::prelude::GENResult;
-use crate::utils;
+use crate::{utils, SETTINGS};
 
 #[derive(Deserialize)]
 pub struct AdminAuthForm {
@@ -41,7 +41,7 @@ impl BGMultiPartForm {
             Some(image) => {
                 let (filename, is_webp) = utils::verify_file_as_webp(image)?;
                 let mut src = image.file.path().to_path_buf();
-                let mut dest = PathBuf::from("data/assets/").join(filename);
+                let mut dest = PathBuf::from(format!("{}/assets/", &SETTINGS.data_dir)).join(filename);
                 dest.set_extension("webp");
                 if !is_webp {
                     src = utils::convert_img_to_webp(image.file.path())?;
@@ -195,7 +195,6 @@ impl From<BGMultiPartForm> for BoardGame {
             playtime_no_limit: playtime_no_limit,
             expansions: exp,
             bgg_id: None,
-            exp_inc_players: None,
         }
     }
 }

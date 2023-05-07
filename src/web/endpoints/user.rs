@@ -44,6 +44,7 @@ async fn index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>) -> WE
     tera_ctx.insert("query", &params.into_inner());
     tera_ctx.insert("query_string", query_string);
     tera_ctx.insert("pagination_count", &page_count);
+    tera_ctx.insert("ui_page_limit_step", &SETTINGS.ui_page_limit_step);
     tera_ctx.insert("boardgames", &boardgames);
     let render = TERA.render("pages/index.html", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))

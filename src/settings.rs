@@ -13,7 +13,10 @@ pub struct Settings {
     pub secret: String,
     pub adr: String,
     pub port: u16,
+    pub data_dir: String,
+    pub webp_quality: f32,
     pub default_page_limit: u32,
+    pub ui_page_limit_step: u32,
     pub db_start_local: bool,
     pub db_cmd: String,
     pub db_adr: String,
@@ -37,7 +40,10 @@ impl Settings {
         let config = Config::builder()
             .set_default("adr", "0.0.0.0")?
             .set_default("port", 8000)?
+            .set_default("data_dir", "./data")?
+            .set_default("webp_quality", 0.50)?
             .set_default("default_page_limit", 8)?
+            .set_default("ui_page_limit_step", 4)?
             .set_default("db_cmd", "surreal")?
             .set_default("db_start_local", true)?
             .set_default("db_adr", "ws://localhost:8001")?
