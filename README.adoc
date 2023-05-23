@@ -22,6 +22,9 @@ ifdef::env-github[]
 <p align=center>
     <a href="#Installation"><strong>Get Started</strong></a> • <a href="https://bgcat.imsteven.xyz/" rel="nofollow"><strong>Demo</strong></a> • <a href="https://bgcat.imsteven.xyz/api/v1/docs/" rel="nofollow"><strong>API Docs</strong></a>
 </p>
+<p align="center">
+  <img alt="BGCat Homepage" src="docs/images/home.png">
+</p>
 ++++
 endif::[]
 
