@@ -6,9 +6,26 @@
 :sectnumlevels: 1
 
 ifdef::env-github[]
-This is a mirror! Go to the official repository on link:https://gitlab.com/imstevenxyz/bgcat[Gitlab]
+++++
+<p align="center">
+    This is a mirror! Go to the official repository on <a href="https://gitlab.com/imstevenxyz/bgcat" ref="nofollow">Gitlab</a>
+</p>
+<p align="center">
+  <img width="120" height="120" alt="BGCat Logo" src="docs/images/logo.svg">
+</p>
+<p align="center">
+  <span><strong>BGCat</strong></span>
+</p>
+<p align=center>
+  BGCat, short for Boardgame Catalog, is a web app for displaying your magnificent boardgame collection to your friends. With the search and filter features you and your friends can effortlessly find the game to play!
+</p>
+<p align=center>
+    <a href="#Installation"><strong>Get Started</strong></a> • <a href="https://bgcat.imsteven.xyz/" rel="nofollow"><strong>Demo</strong></a> • <a href="https://bgcat.imsteven.xyz/api/v1/docs/" rel="nofollow"><strong>API Docs</strong></a>
+</p>
+++++
 endif::[]
 
+ifndef::env-github[]
 image::docs/images/logo.svg[BGCat Logo,120,120,align="center"]
 [.text-center]
 [.big]#*BGCat*#
@@ -20,6 +37,7 @@ BGCat, short for Boardgame Catalog, is a web app for displaying your magnificent
 link:#Installation[*Get Started*] • link:https://bgcat.imsteven.xyz/[*Demo*] • link:https://bgcat.imsteven.xyz/api/v1/docs/[*API Docs*]
 
 image::docs/images/home.png[BGCat Homepage,align="center"]
+endif::[]
 
 toc::[]
 
