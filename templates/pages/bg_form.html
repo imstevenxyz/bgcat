@@ -8,7 +8,7 @@
   <div class="wrapper">
     <section id="content">
       <h3 class="structural">{% if formtype == "update" %}Update boardgame{% else %}Create boardgame{% endif %}</h3>
-      <div id="form-container">
+      <div id="boardgame-form">
         {% if form.image_url %}
         <div id="bg-form-img">
           <img src="/{{ form.image_url }}" alt="{{ form.title }}"/>
@@ -44,12 +44,6 @@
               <div>
                 <label for="exp-title">Title:</label>
                 <input id="exp-title" name="expansions[][title]" type="text" required value="{{ expansion.title }}">
-              </div>
-              <div>
-                <label>Players:</label>
-                <input id="exp-min-players" name="expansions[][min-player]" type="number" min="0" placeholder="min" aria-label="minimum players" required value="{{ expansion.min_players }}">
-                &mdash;
-                <input id="exp-max-players" name="expansions[][max-player]" type="number" min="0" placeholder="max" aria-label="maximum players" required value="{{ expansion.max_players }}">
               </div>
               <div id="exp-del-control">
                 <label for="exp-del">Mark for deletion</label>

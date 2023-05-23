@@ -6,6 +6,10 @@ use crate::db::query::DbQuery;
 use crate::db::repo::SurrealDBRepo;
 use crate::web::queries::BoardGameQuery;
 
+pub fn generate_boardgame_uid(title: &str) -> String {
+    slugify(title)
+}
+
 pub async fn boardgame_create(db: &SurrealDBRepo, mut data: BoardGame) -> Result<BoardGame, Error> {
     data.uid = Some(slugify(&data.title));
     let boardgame: BoardGame = db

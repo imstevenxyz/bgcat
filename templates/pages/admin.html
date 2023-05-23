@@ -8,40 +8,52 @@
   <h2 class="structural">Main Content</h2>
   <div class="wrapper">
     <section id="content">
-      <div id="menu">
+      <div id="menu" class="flex-bar">
         <h3 class="structural">Administration</h3>
-        <form action="/admin/new">
-          <button type="submit" id="create">
-            <i class="fas fa-plus"></i> Add Boardgame
-          </button>
-        </form>
-        <form action="/admin/export">
-          <button type="submit" id="export">
-            <i class="fas fa-file-export"></i> Export Database
-          </button>
-        </form>
+        <div class="flex-start">
+          <form action="/admin/new">
+            <button type="submit" id="create">
+              <i class="fas fa-plus"></i> Add Boardgame
+            </button>
+          </form>
+          <form action="/admin/export">
+            <button type="submit" id="export">
+              <i class="fas fa-file-export"></i> Export Database
+            </button>
+          </form>
+        </div>
+        <div class="flex-end">
+          <article class="statistic" id="boardgames">
+            <p>Boardgames</p>
+            <p>100</p>
+          </article>
+          <article class="statistic" id="expansions">
+            <p>Expansions</p>
+            <p>100</p>
+          </article>
+        </div>
       </div>
       <div id="boardgame-container">
         <div class="loader hidden" id="pagination-loader"></div>
         <div class="loader-backdrop" id="pagination-loader-backdrop"></div>
         <ul id="boardgame-list">
           {% for boardgame in boardgames %}
-          <li class="boardgame pagination-item" page-index="{{ query.page }}">
-            <div id="start">
+          <li class="boardgame flex-bar pagination-item" page-index="{{ query.page }}">
+            <div class="flex-start">
               <h4>{{ boardgame.title }}</h4>
               <p id="uid" onclick="copyUid(this)">
                 {{ boardgame.uid }}<span class="tooltip">Copied!</span>
               </p>
             </div>
-            <div id="end">
+            <div class="flex-end">
               <form action="/admin/edit/{{ boardgame.uid }}" method="get">
                 <button type="submit" id="edit">
-                  <i class="fas fa-edit"></i> edit
+                  <i class="fas fa-edit fa-fw"></i> edit
                 </button>
               </form>
               <form action="/admin/delete/{{ boardgame.uid }}" method="post">
                 <button type="submit" id="delete">
-                  <i class="fas fa-solid fa-trash"></i> delete
+                  <i class="fas fa-trash fa-fw"></i> delete
                 </button>
               </form>
             </div>

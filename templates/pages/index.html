@@ -61,11 +61,11 @@
               <img src="{{ boardgame.image_url }}" alt="{{ boardgame.title }}"/>
               <ul class="info">
                 <li>
-                  <i class="fas fa-users"></i>
+                  <i class="fas fa-users fa-fw"></i>
                   {{ boardgame.min_players -}} {% if boardgame.min_players != boardgame.max_players %} &mdash; {{ boardgame.max_players -}} {% endif %} {%- if boardgame.players_no_limit -%} + {% endif %}
                 </li>
                 <li>
-                  <i class="far fa-clock"></i>
+                  <i class="far fa-clock fa-fw"></i>
                   {{ boardgame.min_playtime -}} {% if boardgame.min_playtime != boardgame.max_playtime %} &mdash; {{ boardgame.max_playtime -}} {% endif %} {%- if boardgame.playtime_no_limit -%} + {% endif %} min
                 </li>
               </ul>

@@ -3,7 +3,7 @@ use utoipa::{Modify, OpenApi};
 
 use crate::db::models::{BoardGame, BoardGameExpansion, DbQueryField, DbQuerySortDirection};
 use crate::web::endpoints::api_v1::api;
-use crate::web::responses::ErrorMessageResponse;
+use crate::web::responses::{ErrorMessageResponse, StatisticsResponse};
 
 #[derive(OpenApi)]
 #[openapi(
@@ -13,7 +13,8 @@ use crate::web::responses::ErrorMessageResponse;
         api::create_boardgame,
         api::read_boardgame,
         api::update_boardgame,
-        api::delete_boardgame
+        api::delete_boardgame,
+        api::statistics
     ),
     components(
         schemas(
@@ -22,6 +23,7 @@ use crate::web::responses::ErrorMessageResponse;
             DbQueryField,
             DbQuerySortDirection,
             ErrorMessageResponse,
+            StatisticsResponse
         )
     ),
     modifiers(&ApiAuthDoc)

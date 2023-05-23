@@ -1,10 +1,11 @@
 use actix_files as fs;
-use actix_web::web::{scope, Query};
+use actix_web::web::{scope, Query, Path};
 use actix_web::{get, web::Data, HttpResponse, Scope};
 use tera::Context;
 
 use crate::db::crud;
 use crate::db::repo::SurrealDBRepo;
+use crate::errors::BGCError;
 use crate::prelude::WEBResult;
 use crate::web::queries::BoardGameQuery;
 use crate::{SETTINGS, TERA, TERA_C};
@@ -21,7 +22,8 @@ pub fn setup() -> Scope {
                 .use_etag(true)
                 .use_last_modified(true),
         )
-        .service(index);
+        .service(index)
+        .service(boardgame);
     scope
 }
 
@@ -48,4 +50,22 @@ async fn index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>) -> WE
     tera_ctx.insert("boardgames", &boardgames);
     let render = TERA.render("pages/index.html", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
+}
+
+#[get("/boardgame/{uid}")]
+async fn boardgame(path: Path<String>, db: Data<SurrealDBRepo>) -> WEBResult {
+    let uid = path.into_inner();
+    let boardgame = crud::boardgame_read(&db, &uid).await?;
+
+
+    match boardgame {
+        None => Err(BGCError::NotFound("Boardgame not found".to_string())),
+        Some(boardgame) => {
+            let mut tera_ctx = Context::new();
+            tera_ctx.clone_from(&TERA_C);
+            tera_ctx.insert("boardgame", &boardgame);
+            let render = TERA.render("pages/bg.html", &tera_ctx).unwrap();
+            Ok(HttpResponse::Ok().body(render))
+        }
+    }
 }

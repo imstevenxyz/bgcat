@@ -29,8 +29,7 @@ pub struct BoardGame {
 #[derive(Serialize, Deserialize, ToSchema, Debug)]
 pub struct BoardGameExpansion {
     pub title: String,
-    pub min_players: u8,
-    pub max_players: u8,
+
 }
 
 #[derive(Serialize, Deserialize, ToSchema, Default, Debug)]

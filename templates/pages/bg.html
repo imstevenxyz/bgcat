@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/bg.css?v={{ css_ver }}">
+{% endblock head %}
+{% block content %}
+<section id="main">
+  <h2 class="structural">Main Content</h2>
+  <div class="wrapper">
+    <section id="content">
+      <div id="boardgame">
+        <img src="/{{ boardgame.image_url }}" alt="{{ boardgame.title }}"/>
+        <div id="info">
+            <h3>{{ boardgame.title }}</h3>
+            <p><i class="fas fa-users fa-fw"></i>Players: {{ boardgame.min_players -}} {% if boardgame.min_players != boardgame.max_players %} &mdash; {{ boardgame.max_players -}} {% endif %} {%- if boardgame.players_no_limit -%} + {% endif %}</p>
+            <p><i class="far fa-clock fa-fw"></i>Playtime: {{ boardgame.min_playtime -}} {% if boardgame.min_playtime != boardgame.max_playtime %} &mdash; {{ boardgame.max_playtime -}} {% endif %} {%- if boardgame.playtime_no_limit -%} + {% endif %} min</p>
+        </div>
+        <div id="expansions">
+          {% if boardgame.expansions %}<h4>Expansions:</h4>{% endif %}
+          {% for expansion in boardgame.expansions %}
+          <div class="expansion">
+              <p>{{ expansion.title }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock content %}

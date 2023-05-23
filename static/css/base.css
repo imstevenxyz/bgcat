@@ -3,17 +3,19 @@
 */
 
 :root, html.theme-light {
- --highlight-primary: #3367d6;
+ --highlight-primary: #1e66f5;
  --highlight-secondary: #4285f4;
  --highlight-hover: #5a95f5;
  --background: #f5f5f5;
  --background-item: #c8c8c8;
- --background-good: #4caf50;
- --background-warning: #dc3545;
+ --background-good: #40a02b;
+ --background-warning: #d20f39;
  --text: #363636;
  --text-header: #ffffff;
  --text-title: #303030;
  --text-subtitle: #424242;
+ --accent-one: #fe640b;
+ --accent-two: #e64553;
  --text-form: #000000;
  --loader-one: #0000FF;
  --loader-two: #00FF00;
@@ -22,13 +24,13 @@
 
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
     :root, html {
-        --highlight-primary: #3367d6;
+        --highlight-primary: #1e66f5;
         --highlight-secondary: #4285f4;
         --highlight-hover: #5a95f5;
         --background: #f5f5f5;
         --background-item: #c8c8c8;
-        --background-good: #4caf50;
-        --background-warning: #dc3545;
+        --background-good: #40a02b;
+        --background-warning: #d20f39;
         --text: #363636;
         --text-header: #ffffff;
         --text-title: #303030;
@@ -41,13 +43,13 @@
 }
 
 html.theme-dark {
-    --highlight-primary: #3367d6;
+    --highlight-primary: #1e66f5;
     --highlight-secondary: #4285f4;
     --highlight-hover: #5a95f5;
     --background: #131313;
     --background-item: #2b2b2b;
-    --background-good: #4caf50;
-    --background-warning: #dc3545;
+    --background-good: #40a02b;
+    --background-warning: #d20f39;
     --text: #eaeaea;
     --text-header: #ffffff;
     --text-title: #fafafa;
@@ -60,13 +62,13 @@ html.theme-dark {
 
 @media (prefers-color-scheme: dark) {
     :root, html {
-        --highlight-primary: #3367d6;
+        --highlight-primary: #1e66f5;
         --highlight-secondary: #4285f4;
         --highlight-hover: #5a95f5;
         --background: #131313;
         --background-item: #2b2b2b;
-        --background-good: #4caf50;
-        --background-warning: #dc3545;
+        --background-good: #40a02b;
+        --background-warning: #d20f39;
         --text: #eaeaea;
         --text-header: #ffffff;
         --text-title: #fafafa;
@@ -195,7 +197,7 @@ header .navitem {
     padding: 0 1rem;
 }
 
-header .navitem:last-child {
+header .navitem#search-bar {
     padding: 0 0 0 1rem;
 }
 
