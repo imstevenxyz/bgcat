@@ -11,7 +11,7 @@ use crate::errors::BGCError;
 use crate::prelude::{GENResult, WEBResult};
 use crate::web::forms::{AdminAuthForm, BGExpansionForm, BGForm, BGMultiPartForm};
 use crate::web::queries::BoardGameQuery;
-use crate::{SETTINGS, TERA, TERA_C};
+use crate::{SETTINGS, TERA, TERA_C, utils};
 
 pub fn setup() -> Scope {
     let scope = scope("/admin")
@@ -134,8 +134,6 @@ async fn bg_create_add_expansion_form(form: BGMultiPartForm) -> WEBResult {
     let mut form = BGForm::from(form);
     form.expansions.push(BGExpansionForm {
         title: None,
-        min_players: None,
-        max_players: None,
     });
 
     let mut tera_ctx = Context::new();
@@ -147,8 +145,10 @@ async fn bg_create_add_expansion_form(form: BGMultiPartForm) -> WEBResult {
 }
 
 async fn bg_create_submit(form: BGMultiPartForm, db: Data<SurrealDBRepo>) -> WEBResult {
-    let image_url = form.save_image()?;
+    let uid = crud::generate_boardgame_uid(&form.title);
+    let image_url = form.save_image(&uid)?;
     let mut new_bg = BoardGame::from(form);
+    new_bg.uid = Some(uid);
     if image_url.is_some() {
         new_bg.image_url = image_url.unwrap();
     }
@@ -214,8 +214,6 @@ async fn bg_update_add_expansion_form(bg: BoardGame, form: BGMultiPartForm) -> W
     form.image_url = Some(bg.image_url);
     form.expansions.push(BGExpansionForm {
         title: None,
-        min_players: None,
-        max_players: None,
     });
 
     let mut tera_ctx = Context::new();
@@ -231,7 +229,7 @@ async fn bg_update_submit(
     mut form: BGMultiPartForm,
     db: Data<SurrealDBRepo>,
 ) -> WEBResult {
-    let image_url = form.save_image()?;
+    let image_url = form.save_image(bg.uid.as_ref().unwrap())?;
 
     let mut indices: Vec<u8> = Vec::new();
     form.meta_del_expansion.reverse();
@@ -240,8 +238,6 @@ async fn bg_update_submit(
     }
     for i in indices {
         form.expansion_titles.remove(i.into());
-        form.expansion_max_players.remove(i.into());
-        form.expansion_min_players.remove(i.into());
     }
 
     let mut new_bg = BoardGame::from(form);
@@ -263,8 +259,14 @@ async fn bg_delete(session: Session, path: Path<String>, db: Data<SurrealDBRepo>
     is_authenticated(&session)?;
 
     let uid = path.into_inner();
-    let _: Option<BoardGame> = crud::boardgame_delete(&db, &uid).await?; //TODO better checking if really deleted
-    Ok(HttpResponse::Found()
+    let boardgame: Option<BoardGame> = crud::boardgame_delete(&db, &uid).await?;
+
+    if boardgame.is_none() {
+        Err(BGCError::NotFound("Boardgame not found".to_string()))
+    } else {
+        utils::delete_assets(&uid);
+        Ok(HttpResponse::Found()
         .append_header(("Location", "/admin"))
         .finish())
+    }
 }

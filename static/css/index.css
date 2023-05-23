@@ -52,9 +52,7 @@
     height: 23rem;
     object-fit: contain;
     border-radius: 0.8rem;
-    border: 1px #657b83 solid;
     background: var(--background-item);
-    padding: 0.2rem;
 }
 
 .boardgame .info {

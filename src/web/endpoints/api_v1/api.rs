@@ -3,13 +3,14 @@ use actix_web::web::{scope, Data, Json, Path, Query};
 use actix_web::{delete, get, post, put, HttpRequest, HttpResponse, Scope};
 use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 
-use crate::db::crud;
+use crate::db::{crud, stats};
 use crate::db::models::BoardGame;
 use crate::db::repo::SurrealDBRepo;
 use crate::errors::BGCError;
 use crate::prelude::{APIResult, GENResult};
 use crate::web::queries::BoardGameQuery;
-use crate::SETTINGS;
+use crate::web::responses::StatisticsResponse;
+use crate::{SETTINGS, utils};
 
 pub fn setup() -> Scope {
     let scope = scope("/api/v1")
@@ -18,7 +19,8 @@ pub fn setup() -> Scope {
         .service(create_boardgame)
         .service(read_boardgame)
         .service(update_boardgame)
-        .service(delete_boardgame);
+        .service(delete_boardgame)
+        .service(statistics);
     scope
 }
 
@@ -183,6 +185,28 @@ async fn delete_boardgame(
     if boardgame.is_none() {
         Err(BGCError::NotFound("Boardgame not found".to_string()))
     } else {
+        utils::delete_assets(&uid);
         Ok(HttpResponse::NoContent().finish())
     }
+}
+
+/// Get statistics
+#[utoipa::path(
+    tag = "public",
+    context_path = "/api/v1",
+    responses(
+        (status = 200, body = StatisticsResponse),
+    ),
+)]
+#[get("/statistics")]
+async fn statistics(
+    db: Data<SurrealDBRepo>,
+) -> APIResult {
+    let boardgame_count = stats::get_total_boardgame_count(&db.client).await?;
+    let expansion_count = stats::get_total_expansion_count(&db.client).await?;
+    let response = StatisticsResponse{
+        boardgames: boardgame_count,
+        expansions: expansion_count
+    };
+    Ok(HttpResponse::Ok().json(response))
 }

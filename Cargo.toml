@@ -1,6 +1,6 @@
 [package]
 name = "bgcat"
-version = "0.1.0-b1"
+version = "0.1.0-b2"
 edition = "2021"
 
 [dependencies]
@@ -9,20 +9,20 @@ actix-multipart = "0.6.0"
 actix-web = "4.3.1"
 actix-web-httpauth = "0.8.0"
 actix-session = { version = "0.7.2", features = ["cookie-session"] }
-chrono = {version = "0.4.22", features = ["serde"]}
-config = "0.13.1"
-fern = {version = "0.6.1", features = ["colored"]}
+chrono = {version = "0.4.24", features = ["serde"]}
+config = "0.13.3"
+fern = {version = "0.6.2", features = ["colored"]}
 image = "0.24.6"
 lazy_static = "1.4.0"
 log = "0.4.17"
 mime = "0.3.17"
-serde = { version = "1.0.159", features = ["derive"] }
+serde = { version = "1.0.163", features = ["derive"] }
 serde_json = "1.0.96"
 serde_urlencoded = "0.7.1"
 slug = "0.1.4"
 # https://github.com/surrealdb/surrealdb/issues/1850
 surrealdb = { git = "https://github.com/surrealdb/surrealdb.git", tag = "v1.0.0-beta.9+20230402" }
 tera = { version = "1.18.1", default-features = false }
-utoipa = { version = "3", features = ["actix_extras"] }
-utoipa-swagger-ui = { version = "3", features = ["actix-web","debug-embed"] }
+utoipa = { version = "3.3.0", features = ["actix_extras"] }
+utoipa-swagger-ui = { version = "3.1.3", features = ["actix-web","debug-embed"] }
 webp = "0.2.2"

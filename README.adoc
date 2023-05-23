@@ -112,3 +112,10 @@ Here you can create, delete and update your boardgames. Uploaded images are conv
 
 Swagger interface is available at `/api/v1/docs/`. +
 The openapi specification is available at `/api/v1/openapi.json`
+
+== Acknowledgment
+
+Inspirations for theme and colors:
+
+* link:https://github.com/bastienwirtz/homer[bastienwirtz/homer] (Header and light/dark theme)
+* link:https://github.com/catppuccin/catppuccin[catppuccin/catppuccin] (Colors)

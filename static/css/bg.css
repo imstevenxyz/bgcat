@@ -1,0 +1,38 @@
+#boardgame {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+#boardgame > div {
+    margin-top: 1rem;
+}
+
+#boardgame i {
+    margin-right: 1rem;
+}
+
+#boardgame img {
+    margin: 0 auto;
+    object-fit: scale-down;
+    border-radius: 0.8rem;
+    background: var(--background-item);
+    max-width: 25rem;
+}
+
+#boardgame #info {
+    text-align: left;
+}
+
+#boardgame #expansions {
+    text-align: left;
+}
+
+#boardgame #expansions .expansion {
+    background-color: var(--background-item);
+    height: fit-content;
+    margin: 1rem;
+    padding: 1rem 1rem;
+    border-radius: 5px;
+}

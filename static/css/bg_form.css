@@ -3,72 +3,70 @@
     text-align: left;
 }
 
-#bg-form-img {
-    width: 100%;
-    text-align: center;
-}
-
-#bg-form-img img {
-    margin: 0 auto;
-    object-fit: scale-down;
-    border-radius: 0.8rem;
-    border: 1px #657b83 solid;
-    background: var(--background-item);
-    padding: 0.2rem;
-    max-width: 25rem;
-}
-
-#bg-form {
+#boardgame-form {
     max-width: 60rem;
     margin: 0 auto;
     padding: 0 2rem;
+    text-align: center;
+}
+
+#boardgame-form img {
+    margin: 0 auto;
+    object-fit: scale-down;
+    border-radius: 0.8rem;
+    background: var(--background-item);
+    max-width: 25rem;
+}
+
+#boardgame-form form {
+    text-align: left;
 }
 
 @media screen and (max-width: 600px) {
-    #bg-form label:nth-of-type(1){
+    #boardgame-form label:nth-of-type(1){
         display: block;
     }
 }
 
-#bg-form label {
+#boardgame-form label {
     margin-bottom: 0.3rem;
 }
 
-#bg-form button {
+#boardgame-form button {
     display: inline-block;
 }
 
-#bg-form button[type="submit"] {
+#boardgame-form button[type="submit"] {
     background-color: var(--background-good);
 }
 
-#bg-form input[type="text"] {
+#boardgame-form input[type="text"] {
     width: 100%;
 }
 
-#bg-form input[type="number"] {
+#boardgame-form input[type="number"] {
     max-width: 8rem;
     text-align: center;
 }
 
-#bg-form input[type="checkbox"] {
+#boardgame-form input[type="checkbox"] {
     height: auto;
 }
 
-#bg-form #control {
+#boardgame-form #control {
     text-align: right;
     vertical-align: middle;
 }
 
-#bg-form #exp-control {
+#boardgame-form #exp-control {
     display: inline-block;
 }
 
-#bg-form div, .exp div {
+#boardgame-form div, .exp div {
     padding: 0.5rem 0;
 }
 
-#bg-form .exp {
+#boardgame-form .exp {
     background-color: var(--background-item);
     height: fit-content;
     margin: 1rem;

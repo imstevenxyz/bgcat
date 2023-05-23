@@ -51,12 +51,6 @@ function add_expansion() {
           <label for="exp-title">Title:</label>
           <input id="exp-title" name="expansions[][title]" type="text" required>
       </div>
-      <div>
-        <label>Players:</label>
-        <input id="exp-min-players" name="expansions[][min-player]" type="number" min="0" placeholder="min" aria-label="minimum players" required>
-        &mdash;
-        <input id="exp-max-players" name="expansions[][max-player]" type="number" min="0" placeholder="max" aria-label="maximum players" required>
-      </div>
       <div id="exp-del-control"></div>
     </div>
   `);

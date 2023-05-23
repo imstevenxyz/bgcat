@@ -4,6 +4,7 @@ use std::{
 };
 
 use actix_multipart::form::tempfile::TempFile;
+use log::{warn, info};
 use mime::Mime;
 
 use crate::SETTINGS;
@@ -17,6 +18,10 @@ pub fn setup_data_dir() -> GENResult<()> {
 
 pub fn verify_file_as_webp(file: &TempFile) -> GENResult<(&str, bool)> {
     let filename = get_file_name(file)?;
+    if filename == "" {
+        //Sometimes an empty file is detected even when no image is selected or uploaded
+        return Ok(("", false));
+    }
     let mime = get_file_mime(file)?;
     verify_file_size(file)?;
     verify_img_mimetype(&mime)?;
@@ -66,6 +71,19 @@ pub fn copy_file<F: AsRef<Path>, T: AsRef<Path>>(from: &F, to: &T) -> GENResult<
 pub fn delete_file<F: AsRef<Path>>(path: &F) -> GENResult<()> {
     fs::remove_file(path)?;
     Ok(())
+}
+
+pub fn delete_directory<F: AsRef<Path>>(path: &F) -> GENResult<()> {
+    fs::remove_dir_all(path)?;
+    Ok(())
+}
+
+pub fn delete_assets(uid: &str) {
+    let result = delete_directory(&format!("{}/assets/{}", &SETTINGS.data_dir, uid));
+    match result {
+        Ok(_) => info!("Deleted assets of {}", uid),
+        Err(why) => warn!("Failed to delete assets directory for {}: {}", uid, why)
+    }
 }
 
 pub fn convert_img_to_webp(file: &Path) -> GENResult<PathBuf> {
