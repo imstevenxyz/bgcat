@@ -9,5 +9,5 @@ pub struct ErrorMessageResponse {
 #[derive(Serialize, Deserialize, ToSchema, Debug)]
 pub struct StatisticsResponse {
     pub boardgames: u32,
-    pub expansions: u32
+    pub expansions: u32,
 }

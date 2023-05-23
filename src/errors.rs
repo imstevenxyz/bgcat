@@ -167,7 +167,9 @@ impl<const T: u8> From<surrealdb::Error> for BGCError<T> {
     fn from(err: surrealdb::Error) -> BGCError<T> {
         match err {
             surrealdb::Error::Db(sub_err) => extract_db_error(sub_err),
-            surrealdb::Error::Api(sub_err) => BGCError::InternalError(format!("DB API: {}", sub_err.to_string())),
+            surrealdb::Error::Api(sub_err) => {
+                BGCError::InternalError(format!("DB API: {}", sub_err.to_string()))
+            }
         }
     }
 }

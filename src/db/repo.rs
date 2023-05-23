@@ -2,8 +2,8 @@ use surrealdb::engine::any::Any;
 use surrealdb::opt::auth::Root;
 use surrealdb::Surreal;
 
-use crate::SETTINGS;
 use crate::prelude::GENResult;
+use crate::SETTINGS;
 
 pub static DB: Surreal<Any> = Surreal::init();
 
@@ -18,7 +18,8 @@ impl SurrealDBRepo {
         DB.signin(Root {
             username: &SETTINGS.db_user,
             password: &SETTINGS.db_pass,
-        }).await?;
+        })
+        .await?;
         DB.use_ns(&SETTINGS.db_ns).use_db(&SETTINGS.db_name).await?;
         Ok(SurrealDBRepo { client: &DB })
     }

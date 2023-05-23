@@ -37,9 +37,12 @@ impl BGMultiPartForm {
             None => Ok(None),
             Some(image) => {
                 let (filename, is_webp) = utils::verify_file_as_webp(image)?;
-                if filename == "" { return Ok(None)};
+                if filename == "" {
+                    return Ok(None);
+                };
                 let mut src = image.file.path().to_path_buf();
-                let mut dest = PathBuf::from(format!("{}/assets/{}", &SETTINGS.data_dir, uid)).join(filename);
+                let mut dest =
+                    PathBuf::from(format!("{}/assets/{}", &SETTINGS.data_dir, uid)).join(filename);
                 dest.set_extension("webp");
 
                 if dest.parent().is_some() {
@@ -82,9 +85,7 @@ impl From<BGMultiPartForm> for BGForm {
         let mut exp: Vec<BGExpansionForm> = Vec::new();
         for (_i, e) in form.expansion_titles.iter().enumerate() {
             let title = e.0.clone(); //TODO better error handling
-            exp.push(BGExpansionForm {
-                title: Some(title),
-            })
+            exp.push(BGExpansionForm { title: Some(title) })
         }
 
         let playtime_no_limit = match form
@@ -149,9 +150,7 @@ impl From<BGMultiPartForm> for BoardGame {
         let mut exp: Vec<BoardGameExpansion> = Vec::new();
         for (_i, e) in form.expansion_titles.iter().enumerate() {
             let title = e.0.clone(); //TODO better error handling
-            exp.push(BoardGameExpansion {
-                title,
-            })
+            exp.push(BoardGameExpansion { title })
         }
 
         let playtime_no_limit = match form

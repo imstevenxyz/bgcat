@@ -29,7 +29,6 @@ pub struct BoardGame {
 #[derive(Serialize, Deserialize, ToSchema, Debug)]
 pub struct BoardGameExpansion {
     pub title: String,
-
 }
 
 #[derive(Serialize, Deserialize, ToSchema, Default, Debug)]

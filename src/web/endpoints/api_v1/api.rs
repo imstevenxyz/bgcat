@@ -3,14 +3,13 @@ use actix_web::web::{scope, Data, Json, Path, Query};
 use actix_web::{delete, get, post, put, HttpRequest, HttpResponse, Scope};
 use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 
-use crate::db::{crud, stats};
 use crate::db::models::BoardGame;
 use crate::db::repo::SurrealDBRepo;
+use crate::db::{crud, stats};
 use crate::errors::BGCError;
 use crate::prelude::{APIResult, GENResult};
 use crate::web::queries::BoardGameQuery;
-use crate::web::responses::StatisticsResponse;
-use crate::{SETTINGS, utils};
+use crate::{utils, SETTINGS};
 
 pub fn setup() -> Scope {
     let scope = scope("/api/v1")
@@ -199,14 +198,7 @@ async fn delete_boardgame(
     ),
 )]
 #[get("/statistics")]
-async fn statistics(
-    db: Data<SurrealDBRepo>,
-) -> APIResult {
-    let boardgame_count = stats::get_total_boardgame_count(&db.client).await?;
-    let expansion_count = stats::get_total_expansion_count(&db.client).await?;
-    let response = StatisticsResponse{
-        boardgames: boardgame_count,
-        expansions: expansion_count
-    };
-    Ok(HttpResponse::Ok().json(response))
+async fn statistics(db: Data<SurrealDBRepo>) -> APIResult {
+    let statistics = stats::get_all_statistics(&db).await?;
+    Ok(HttpResponse::Ok().json(statistics))
 }

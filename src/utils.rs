@@ -4,7 +4,7 @@ use std::{
 };
 
 use actix_multipart::form::tempfile::TempFile;
-use log::{warn, info};
+use log::{info, warn};
 use mime::Mime;
 
 use crate::SETTINGS;
@@ -82,7 +82,7 @@ pub fn delete_assets(uid: &str) {
     let result = delete_directory(&format!("{}/assets/{}", &SETTINGS.data_dir, uid));
     match result {
         Ok(_) => info!("Deleted assets of {}", uid),
-        Err(why) => warn!("Failed to delete assets directory for {}: {}", uid, why)
+        Err(why) => warn!("Failed to delete assets directory for {}: {}", uid, why),
     }
 }
 

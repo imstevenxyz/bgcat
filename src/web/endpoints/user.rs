@@ -1,5 +1,5 @@
 use actix_files as fs;
-use actix_web::web::{scope, Query, Path};
+use actix_web::web::{scope, Path, Query};
 use actix_web::{get, web::Data, HttpResponse, Scope};
 use tera::Context;
 
@@ -56,7 +56,6 @@ async fn index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>) -> WE
 async fn boardgame(path: Path<String>, db: Data<SurrealDBRepo>) -> WEBResult {
     let uid = path.into_inner();
     let boardgame = crud::boardgame_read(&db, &uid).await?;
-
 
     match boardgame {
         None => Err(BGCError::NotFound("Boardgame not found".to_string())),

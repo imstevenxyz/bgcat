@@ -4,14 +4,14 @@ use actix_web::web::{scope, Form, Path, Query};
 use actix_web::{get, post, web::Data, HttpResponse, Scope};
 use tera::Context;
 
-use crate::db::crud;
 use crate::db::models::BoardGame;
 use crate::db::repo::SurrealDBRepo;
+use crate::db::{crud, stats};
 use crate::errors::BGCError;
 use crate::prelude::{GENResult, WEBResult};
 use crate::web::forms::{AdminAuthForm, BGExpansionForm, BGForm, BGMultiPartForm};
 use crate::web::queries::BoardGameQuery;
-use crate::{SETTINGS, TERA, TERA_C, utils};
+use crate::{utils, SETTINGS, TERA, TERA_C};
 
 pub fn setup() -> Scope {
     let scope = scope("/admin")
@@ -68,6 +68,8 @@ async fn admin_index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>)
         .to_string()
         .replace(&format!("&page={}", params.page), "");
 
+    let statistics = stats::get_all_statistics(&db).await?;
+
     let mut tera_ctx = Context::new();
     tera_ctx.clone_from(&TERA_C);
     tera_ctx.insert("search", &true);
@@ -75,6 +77,7 @@ async fn admin_index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>)
     tera_ctx.insert("query_string", query_string);
     tera_ctx.insert("pagination_count", &page_count);
     tera_ctx.insert("boardgames", &boardgames);
+    tera_ctx.insert("statistics", &statistics);
     let render = TERA.render("pages/admin.html", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
@@ -132,9 +135,7 @@ async fn bg_create(
 
 async fn bg_create_add_expansion_form(form: BGMultiPartForm) -> WEBResult {
     let mut form = BGForm::from(form);
-    form.expansions.push(BGExpansionForm {
-        title: None,
-    });
+    form.expansions.push(BGExpansionForm { title: None });
 
     let mut tera_ctx = Context::new();
     tera_ctx.clone_from(&TERA_C);
@@ -212,9 +213,7 @@ async fn bg_update(
 async fn bg_update_add_expansion_form(bg: BoardGame, form: BGMultiPartForm) -> WEBResult {
     let mut form = BGForm::from(form);
     form.image_url = Some(bg.image_url);
-    form.expansions.push(BGExpansionForm {
-        title: None,
-    });
+    form.expansions.push(BGExpansionForm { title: None });
 
     let mut tera_ctx = Context::new();
     tera_ctx.clone_from(&TERA_C);
@@ -266,7 +265,7 @@ async fn bg_delete(session: Session, path: Path<String>, db: Data<SurrealDBRepo>
     } else {
         utils::delete_assets(&uid);
         Ok(HttpResponse::Found()
-        .append_header(("Location", "/admin"))
-        .finish())
+            .append_header(("Location", "/admin"))
+            .finish())
     }
 }

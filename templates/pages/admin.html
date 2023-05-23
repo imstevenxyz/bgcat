@@ -13,23 +13,23 @@
         <div class="flex-start">
           <form action="/admin/new">
             <button type="submit" id="create">
-              <i class="fas fa-plus"></i> Add Boardgame
+              <i class="fas fa-plus fa-fw"></i> Add Boardgame
             </button>
           </form>
-          <form action="/admin/export">
+          <!-- <form action="/admin/export">
             <button type="submit" id="export">
-              <i class="fas fa-file-export"></i> Export Database
+              <i class="fas fa-file-export fa-fw"></i> Export Database
             </button>
-          </form>
+          </form> -->
         </div>
         <div class="flex-end">
           <article class="statistic" id="boardgames">
             <p>Boardgames</p>
-            <p>100</p>
+            <p>{{ statistics.boardgames }}</p>
           </article>
           <article class="statistic" id="expansions">
             <p>Expansions</p>
-            <p>100</p>
+            <p>{{ statistics.expansions }}</p>
           </article>
         </div>
       </div>
