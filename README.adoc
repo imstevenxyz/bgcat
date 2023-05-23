@@ -5,6 +5,10 @@
 :sectnums:
 :sectnumlevels: 1
 
+ifdef::env-github[]
+This is a mirror! Go to the official repository on link:https://gitlab.com/imstevenxyz/bgcat[Gitlab]
+endif::[]
+
 image::docs/images/logo.svg[BGCat Logo,120,120,align="center"]
 [.text-center]
 [.big]#*BGCat*#
