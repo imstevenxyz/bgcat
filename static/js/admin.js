@@ -61,22 +61,22 @@ async function fetch_boardgames(pageIndex) {
  */
 function add_boardgame(boardgame, pageIndex) {
   boardgameContainer.insertAdjacentHTML("beforeend",`
-  <li class="boardgame pagination-item hidden" pagination-index="${pageIndex}">
-      <div id="start">
+  <li class="boardgame flex-bar pagination-item hidden" pagination-index="${pageIndex}">
+      <div class="flex-start">
           <h4>${boardgame.title}</h4>
           <p id="uid" onclick="copyUid(this)">
           ${boardgame.uid}<span class="tooltip">Copied!</span>
           </p>
       </div>
-      <div id="end">
+      <div class="flex-end">
         <form action="/admin/edit/${boardgame.uid}" method="get">
           <button type="submit" id="edit">
-            <i class="fas fa-edit"></i> edit
+            <i class="fas fa-edit fa-fw"></i> edit
           </button>
         </form>
         <form action="/admin/delete/${boardgame.uid}" method="post">
           <button type="submit" id="delete">
-            <i class="fas fa-solid fa-trash"></i> delete
+            <i class="fas fa-trash fa-fw"></i> delete
           </button>
         </form>
       </div>
