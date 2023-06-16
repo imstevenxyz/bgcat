@@ -10,7 +10,7 @@ workflow:
         compare_to: main
         paths:
           - .gitlab-ci.yml
-          - container/Containerfile
+          - container/*
           - src/*
           - Cargo.toml
           - Cargo.lock
