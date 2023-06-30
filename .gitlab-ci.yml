@@ -30,7 +30,7 @@ variables:
 
 build:
   stage: build
-  image: rust:1.69.0-slim
+  image: rust:1.70.0-slim
   variables:
     TARGETS: "x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu"
     CARGO_HOME: $CI_PROJECT_DIR/cargo
