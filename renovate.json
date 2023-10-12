@@ -1,20 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
-    ":semanticCommits",
-    ":semanticCommitTypeAll(ci)"
+      "gitlab>orchestration.imsteven.xyz/renovatebot:configs/recommended#0.1.0"
   ],
   "draftPR": true,
   "assignees": [
     "imstevenxyz"
-  ],
-  "regexManagers": [
-    {
-      "fileMatch": ["(^|\/|\\.)Containerfile[^/]*$"],
-      "matchStrings": [
-        "#\\s?renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?VERSION=\\s?\"(?<currentValue>.*)\"\\s"
-      ]
-    }
   ]
 }
