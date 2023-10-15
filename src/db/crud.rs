@@ -10,9 +10,9 @@ pub fn generate_boardgame_uid(title: &str) -> String {
     slugify(title)
 }
 
-pub async fn boardgame_create(db: &SurrealDBRepo, mut data: BoardGame) -> Result<BoardGame, Error> {
+pub async fn boardgame_create(db: &SurrealDBRepo, mut data: BoardGame) -> Result<Option<BoardGame>, Error> {
     data.uid = Some(slugify(&data.title));
-    let boardgame: BoardGame = db
+    let boardgame: Option<BoardGame> = db
         .client
         .create(("boardgame", data.uid.clone().unwrap()))
         .content(data)

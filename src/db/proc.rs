@@ -33,6 +33,7 @@ fn spawn_local_db_proc() -> GENResult<Child> {
     let proc = Command::new(&SETTINGS.db_cmd)
         .args([
             "start",
+            "--auth",
             "--user",
             &SETTINGS.db_user,
             "--pass",

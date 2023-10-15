@@ -1,11 +1,14 @@
 use surrealdb::engine::any::Any;
 use surrealdb::opt::auth::Root;
 use surrealdb::Surreal;
+use lazy_static::lazy_static;
 
 use crate::prelude::GENResult;
 use crate::SETTINGS;
 
-pub static DB: Surreal<Any> = Surreal::init();
+lazy_static! {
+    pub static ref DB: Surreal<Any> = Surreal::init();
+}
 
 #[derive(Clone)]
 pub struct SurrealDBRepo {

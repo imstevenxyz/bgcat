@@ -98,8 +98,12 @@ async fn create_boardgame(
 ) -> APIResult {
     is_authenticated(&req)?;
 
-    let boardgame: BoardGame = crud::boardgame_create(&db, data.0).await?;
-    Ok(HttpResponse::Created().json(boardgame))
+    let boardgame: Option<BoardGame> = crud::boardgame_create(&db, data.0).await?;
+    if boardgame.is_none() {
+        Err(BGCError::NotFound("Boardgame not found".to_string()))
+    } else {
+        Ok(HttpResponse::Created().json(boardgame))
+    }
 }
 
 /// Get boardgame by UID
