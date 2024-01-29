@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-      "gitlab>orchestration.imsteven.xyz/renovatebot:config-presets/recommended#0.1.0"
+      "gitlab>orchestration.imsteven.xyz/renovatebot:config-presets/recommended"
   ],
   "draftPR": true,
   "assignees": [
