@@ -138,6 +138,35 @@ Here you can create, delete and update your boardgames. Uploaded images are conv
 Swagger interface is available at `/api/v1/docs/`. +
 The openapi specification is available at `/api/v1/openapi.json`
 
+== Development
+
+=== Building and running in a container
+
+[source, console]
+----
+cargo build --release --target x86_64-unknown-linux-gnu --target-dir ./builds
+ln -sr ./builds/x86_64-unknown-linux-gnu ./builds/amd64
+buildah build --file container/Containerfile -t bgcat:dev .
+podman run --rm --name bgcat -p 8000:8000 -e BGCAT_ADMIN_TOKEN=password -e BGCAT_SECRET=really_long_super_secret_token localhost/bgcat:dev
+----
+
+=== Other Rust targets
+
+.Dynamic binary:
+* x86_64-unknown-linux-gnu
+* aarch64-unknown-linux-gnu
+
+.Static binary:
+* x86_64-unknown-linux-musl
+* aarch64-unknown-linux-musl
+
+.Get toolchains:
+[source, console]
+----
+rustup target add <target>
+cargo build --target <target>
+----
+
 == Acknowledgment
 
 Inspirations for theme and colors:
