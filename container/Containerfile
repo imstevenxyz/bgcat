@@ -1,7 +1,7 @@
 FROM cgr.dev/chainguard/wolfi-base:latest
 ARG TARGETARCH
 # renovate: datasource=github-tags depName=surrealdb/surrealdb
-ARG SURREAL_VERSION="v1.0.0"
+ARG SURREAL_VERSION="v1.1.1"
 ENV BGCAT_DB_CMD="/app/surreal"
 WORKDIR /app
 RUN apk add --no-cache curl libstdc++
