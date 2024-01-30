@@ -68,7 +68,7 @@ docker run --detach --restart=always \
     -e BGCAT_SECRET="super_secret_cookie_that_should_be_really_long" \
     -p 8000:8000 \
     -v </your/local/data>:/app/data \
-    registry.imsteven.xyz/lib/bgcat:latest
+    registry.gitlab.com/imstevenxyz/bgcat:latest
 ----
 
 By default the container will run with user uid and gid 65534 (nobody). Running with an arbritrary id is possible using `--user {uid}:{gid}`. Make sure this matches the ownership of your local data directory.
