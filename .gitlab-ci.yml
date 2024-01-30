@@ -35,7 +35,7 @@ variables:
 
 build-binary:
   stage: build
-  image: rust:1.70.0-slim
+  image: rust:1.75.0-slim
   artifacts:
     expire_in: 30m
     paths:
