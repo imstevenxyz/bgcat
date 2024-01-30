@@ -3,7 +3,6 @@
   "extends": [
       "gitlab>orchestration.imsteven.xyz/renovatebot:config-presets/recommended"
   ],
-  "draftPR": true,
   "assignees": [
     "imstevenxyz"
   ]
