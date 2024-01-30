@@ -1,121 +1,131 @@
 include:
-    - project: orchestration.imsteven.xyz/cicd-templates
-      ref: v0.0.3
-      file: templates/buildah.yml
+  - project: orchestration.imsteven.xyz/cicd-templates
+    ref: v1.0.0
+    file:
+      - /templates/buildah.yaml
+      - /templates/gitlab.yaml
 
 workflow:
   rules:
-    - if: $CI_MERGE_REQUEST_ID != null && $CI_MERGE_REQUEST_TITLE !~ /Draft:/
+    - if: $CI_MERGE_REQUEST_IID != null && $CI_MERGE_REQUEST_TITLE !~ /Draft:/
       changes:
         compare_to: main
         paths:
           - .gitlab-ci.yml
           - container/*
+          - .cargo/
           - src/*
           - Cargo.toml
           - Cargo.lock
+      variables:
+        BUILDAH_IMAGE_TAG: "mr-${CI_MERGE_REQUEST_IID}"
     - if: $CI_COMMIT_TAG
+      variables:
+        BUILDAH_IMAGE_TAG: "$CI_COMMIT_TAG"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        BUILDAH_IMAGE_TAG: "$CI_COMMIT_BRANCH"
 
 stages:
   - build
-  - build-image
   - release
 
 variables:
-  IMAGE_NAME: "lib/bgcat"
-  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
-  DOCKER_ARCHIVE: "$CI_PROJECT_DIR/images"
-  GITLAB_PKG_REG: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/bgcat"
+  BUILDAH_IMAGE_NAME: "$CI_PROJECT_PATH"
 
-build:
+build-binary:
   stage: build
   image: rust:1.70.0-slim
-  variables:
-    TARGETS: "x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu"
-    CARGO_HOME: $CI_PROJECT_DIR/cargo
   artifacts:
     expire_in: 30m
     paths:
-      - $CI_PROJECT_DIR/builds/*/release/bgcat
+      - ${CI_PROJECT_DIR}/builds/*/release/bgcat
   cache:
     key: cargo-build
     paths:
-      - $CI_PROJECT_DIR/builds
-      - $CI_PROJECT_DIR/cargo/registry
-      - $CI_PROJECT_DIR/cargo/git
+      - ${CI_PROJECT_DIR}/builds
+      - ${CI_PROJECT_DIR}/cargo/registry
+      - ${CI_PROJECT_DIR}/cargo/git
+  variables:
+    TARGETS: "x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu"
+    CARGO_HOME: "${CI_PROJECT_DIR}/cargo"
   before_script:
     - apt-get update
     - apt-get install -y gcc-aarch64-linux-gnu
     - rustup target add $TARGETS
   script:
+    - apt update && apt install -y gcc-aarch64-linux-gnu
+    - rustup target add $TARGETS
     - |
       for TARGET in $TARGETS; do
-        cargo build --release --target $TARGET --target-dir $CI_PROJECT_DIR/builds/
+        cargo build --release --target $TARGET --target-dir ${CI_PROJECT_DIR}/builds
       done
 
-image-build:
+build-container:
+  stage: build
   extends:
-    - .buildah-build
-  stage: build-image
+    - .buildah-manifest-build
   needs:
-    - job: build
+    - job: build-binary
       artifacts: true
   variables:
-    BUILDAH_ARCH: "amd64,arm64"
-    BUILDAH_BUILD_OPT: "-f container/Containerfile"
+    BUILDAH_BUILD_PLATFORMS: "linux/amd64,linux/arm64"
+    BUILDAH_BUILD_FILE: "container/Containerfile"
   before_script:
-    - mkdir -p ${DOCKER_ARCHIVE}
     - ln -sr builds/x86_64-unknown-linux-gnu builds/amd64
     - ln -sr builds/aarch64-unknown-linux-gnu builds/arm64
 
-image-push:
+push-container:
+  stage: release
   extends:
-    - .buildah-push
-  stage: release
+    - .buildah-manifest-push
   needs:
-    - job: image-build
+    - job: build-container
       artifacts: true
-  variables:
-    BUILDAH_ARCH: "amd64,arm64"
-    BUILDAH_EXTRA_TAGS: "$CI_COMMIT_TAG,$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"
-    BUILDAH_PUSH_LATEST_ON_TAG: "$CI_COMMIT_TAG"
 
-package:
+release-container:
   stage: release
-  image: alpine:3.18
+  extends:
+    - .buildah-manifest-push
+  needs:
+    - job: build-container
+      artifacts: true
   rules:
     - if: $CI_COMMIT_TAG
-  needs:
-    - job: build
-      artifacts: true
   variables:
-    PKG_ARCH: "amd64,arm64"
-  artifacts:
-    expire_in: 30m
-    paths:
-      - $CI_PROJECT_DIR/artifacts
+    BUILDAH_PUSH_TAG: "$CI_COMMIT_TAG"
+    BUILDAH_PUSH_LATEST: "true"
+
+release-package:
+  stage: release
+  extends:
+    - .gitlab-publish-package
+  needs:
+    - job: build-binary
+      artifacts: true
+  rules:
+    - if: $CI_COMMIT_TAG
+  variables:
+    ARCHITECTURES: "amd64,arm64"
+    GITLAB_PUBLISH_PKG_FILES: "bgcat_${CI_COMMIT_TAG}_amd64.tar.gz,bgcat_${CI_COMMIT_TAG}_arm64.tar.gz"
+    GITLAB_PUBLISH_PKG_VERSIONS: "$CI_COMMIT_TAG"
   before_script:
-    - apk add curl
-    - mkdir -p data/assets artifacts
     - ln -s x86_64-unknown-linux-gnu builds/amd64
     - ln -s aarch64-unknown-linux-gnu builds/arm64
-  script:
+    - mkdir -p data/assets
     - |
-      for ARCH in ${PKG_ARCH//,/ }; do
-        PKG_NAME="bgcat_${CI_COMMIT_TAG}_${ARCH}.tgz"
+      for ARCH in ${ARCHITECTURES//,/ }; do
         mv builds/$ARCH/release/bgcat .
-        tar -czf artifacts/${PKG_NAME} bgcat bgcat.toml LICENSE README.adoc static/ templates/ data/
-        curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file artifacts/${PKG_NAME} "${GITLAB_PKG_REG}/${CI_COMMIT_TAG}/${PKG_NAME}"
+        tar -czvf bgcat_${CI_COMMIT_TAG}_${ARCH}.tar.gz bgcat bgcat.toml LICENSE README.adoc static/ templates/ data/
       done
 
-release:
+release-gitlab:
   stage: release
   image: registry.gitlab.com/gitlab-org/release-cli
+  needs:
+    - job: release-package
   rules:
     - if: $CI_COMMIT_TAG
-  needs:
-    - job: package
   script:
     - echo "Creating release on gitlab for tag $CI_COMMIT_TAG"
   release:
@@ -125,6 +135,6 @@ release:
     assets:
       links:
         - name: "BGCat_${CI_COMMIT_TAG}_amd64.tgz"
-          url: "${GITLAB_PKG_REG}/${CI_COMMIT_TAG}/bgcat_${CI_COMMIT_TAG}_amd64.tgz"
+          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/bgcat/${CI_COMMIT_TAG}/bgcat_${CI_COMMIT_TAG}_amd64.tar.gz"
         - name: "BGCat_${CI_COMMIT_TAG}_arm64.tgz"
-          url: "${GITLAB_PKG_REG}/${CI_COMMIT_TAG}/bgcat_${CI_COMMIT_TAG}_arm64.tgz"
+          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/bgcat/${CI_COMMIT_TAG}/bgcat_${CI_COMMIT_TAG}_arm64.tar.gz"
