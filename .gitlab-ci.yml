@@ -1,9 +1,9 @@
 include:
   - project: orchestration.imsteven.xyz/cicd-templates
-    ref: v1.0.0
+    ref: v1.2.0
     file:
-      - /templates/buildah.yaml
-      - /templates/gitlab.yaml
+      - /templates/buildah/jobs.yaml
+      - /templates/gitlab/jobs.yaml
 
 workflow:
   rules:
