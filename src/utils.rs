@@ -87,7 +87,7 @@ pub fn delete_assets(uid: &str) {
 }
 
 pub fn convert_img_to_webp(file: &Path) -> GENResult<PathBuf> {
-    let image = image::io::Reader::open(file)?
+    let image = image::ImageReader::open(file)?
         .with_guessed_format()?
         .decode()?;
     let webp = webp::Encoder::from_image(&image)?.encode(SETTINGS.webp_quality);

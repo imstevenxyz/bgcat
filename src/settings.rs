@@ -41,7 +41,7 @@ impl Settings {
             .set_default("adr", "0.0.0.0")?
             .set_default("port", 8000)?
             .set_default("data_dir", "./data")?
-            .set_default("webp_quality", 0.50)?
+            .set_default("webp_quality", 1.00)?
             .set_default("default_page_limit", 8)?
             .set_default("ui_page_limit_step", 4)?
             .set_default("db_cmd", "surreal")?

@@ -29,11 +29,10 @@ pub fn init_local_db() -> GENResult<Option<ChildGuard>> {
 }
 
 fn spawn_local_db_proc() -> GENResult<Child> {
-    let db_file = format!("file:{}/bgcat.db", &SETTINGS.data_dir);
+    let db_file = format!("rocksdb:{}/bgcat.db", &SETTINGS.data_dir);
     let proc = Command::new(&SETTINGS.db_cmd)
         .args([
             "start",
-            "--auth",
             "--user",
             &SETTINGS.db_user,
             "--pass",

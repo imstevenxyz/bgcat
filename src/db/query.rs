@@ -122,7 +122,7 @@ impl DbQuery {
     }
 
     pub async fn execute(&self, db: &Surreal<Any>) -> Result<Response, Error> {
-        Ok(db.query(&self.query).bind(&self.bindings).await?)
+        Ok(db.query(&self.query).bind(self.bindings.clone()).await?)
     }
 }
 
