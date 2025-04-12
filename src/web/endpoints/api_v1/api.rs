@@ -9,6 +9,7 @@ use crate::db::{crud, stats};
 use crate::errors::BGCError;
 use crate::prelude::{APIResult, GENResult};
 use crate::web::queries::BoardGameQuery;
+use crate::web::responses::{ErrorMessageResponse,StatisticsResponse};
 use crate::{utils, SETTINGS};
 
 pub fn setup() -> Scope {
