@@ -55,7 +55,7 @@ build-binary:
     CARGO_HOME: "${CI_PROJECT_DIR}/cargo"
   script:
     - apt-get update
-    - apt-get install -y build-essential cmake clang libclang-dev g++-aarch64-linux-gnu
+    - apt-get install -y curl build-essential cmake clang libclang-dev g++-aarch64-linux-gnu
     - rustup component add rustfmt
     - rustup target add $TARGETS
     - |
