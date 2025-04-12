@@ -43,6 +43,8 @@ build-binary:
     expire_in: 30m
     paths:
       - ${CI_PROJECT_DIR}/builds/*/release/bgcat
+      - ${CI_PROJECT_DIR}/static/js/*
+      - ${CI_PROJECT_DIR}/static/css/*
   cache:
     when: always
     key: cargo-build
@@ -54,14 +56,18 @@ build-binary:
     TARGETS: "x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu"
     CARGO_HOME: "${CI_PROJECT_DIR}/cargo"
   script:
+    - PATH="$PATH:${CI_PROJECT_DIR}/cargo/bin"
     - apt-get update
     - apt-get install -y curl build-essential cmake clang libclang-dev g++-aarch64-linux-gnu
     - rustup component add rustfmt
     - rustup target add $TARGETS
+    - cargo install minix --force --version 0.1.8
     - |
       for TARGET in $TARGETS; do
         cargo build --release --target $TARGET --target-dir ${CI_PROJECT_DIR}/builds
       done
+    - find static/js -type f -name '*.js' -exec minix -i {} -o {} \;
+    - find static/css -type f -name '*.css' -exec minix -i {} -o {} \;
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
       when: manual
@@ -79,6 +85,7 @@ build-container:
     BUILDAH_BUILD_PLATFORMS: "linux/amd64,linux/arm64"
     BUILDAH_BUILD_FILE: "container/Containerfile"
   before_script:
+    - cat static/js/index.js
     - ln -sr builds/x86_64-unknown-linux-gnu builds/amd64
     - ln -sr builds/aarch64-unknown-linux-gnu builds/arm64
 
