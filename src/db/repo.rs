@@ -18,11 +18,13 @@ pub struct SurrealDBRepo {
 impl SurrealDBRepo {
     pub async fn new() -> GENResult<Self> {
         DB.connect(&SETTINGS.db_adr).await?;
-        DB.signin(Root {
-            username: &SETTINGS.db_user,
-            password: &SETTINGS.db_pass,
-        })
-        .await?;
+        if SETTINGS.db_user.is_some() && SETTINGS.db_pass.is_some() {
+            DB.signin(Root {
+                username: SETTINGS.db_user.as_ref().unwrap(),
+                password: SETTINGS.db_pass.as_ref().unwrap(),
+            })
+            .await?;
+        }
         DB.use_ns(&SETTINGS.db_ns).use_db(&SETTINGS.db_name).await?;
         Ok(SurrealDBRepo { client: &DB })
     }

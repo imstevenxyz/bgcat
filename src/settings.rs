@@ -17,13 +17,11 @@ pub struct Settings {
     pub webp_quality: f32,
     pub default_page_limit: u32,
     pub ui_page_limit_step: u32,
-    pub db_start_local: bool,
-    pub db_cmd: String,
     pub db_adr: String,
     pub db_ns: String,
     pub db_name: String,
-    pub db_user: String,
-    pub db_pass: String,
+    pub db_user: Option<String>,
+    pub db_pass: Option<String>,
     pub log_level: String,
     pub debug: bool,
 }
@@ -44,13 +42,9 @@ impl Settings {
             .set_default("webp_quality", 1.00)?
             .set_default("default_page_limit", 8)?
             .set_default("ui_page_limit_step", 4)?
-            .set_default("db_cmd", "surreal")?
-            .set_default("db_start_local", true)?
-            .set_default("db_adr", "ws://localhost:8001")?
+            .set_default("db_adr", "rocksdb:./data/bgcat.db")?
             .set_default("db_ns", "bgcat")?
             .set_default("db_name", "bgcat")?
-            .set_default("db_user", "root")?
-            .set_default("db_pass", "root")?
             .set_default("log_level", "info")?
             .set_default("debug", false)?
             .add_source(File::with_name("bgcat.toml").required(false))

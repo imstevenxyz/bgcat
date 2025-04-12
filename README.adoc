@@ -65,36 +65,13 @@ Supported architectures:
 ----
 docker run --detach --restart=always \
     -e BGCAT_ADMIN_TOKEN="a_good_password" \
-    -e BGCAT_SECRET="super_secret_cookie_that_should_be_really_long" \
+    -e BGCAT_SECRET="super_secret_token_that_should_be_really_long" \
     -p 8000:8000 \
     -v </your/local/data>:/app/data \
     registry.gitlab.com/imstevenxyz/bgcat:latest
 ----
 
 By default the container will run with user uid and gid 65534 (nobody). Running with an arbritrary id is possible using `--user {uid}:{gid}`. Make sure this matches the ownership of your local data directory.
-
-The images include a local installation of SurrealDB. To use this instance don't change the db_start_local and db_cmd configuration options!
-
-=== Helm
-
-TODO
-
-=== Build manually
-
-1. Install link:https://doc.rust-lang.org/cargo/getting-started/installation.html[Rust]
-2. Download this repo
-3. Build BGCat for your native architecture:
-+
-[source, bash]
-----
-cargo build --release
-----
-4. Run the build binary:
-+
-[source, bash]
-----
-./target/release/bgcat
-----
 
 == Configuration
 
@@ -115,13 +92,11 @@ data_dir, The directory to store the assets and db file if applicable, string, `
 webp_quality, The encoding quality to use when converting uploaded images, f32, `1.00`
 default_page_limit, The default limit of items to show per page, u32, `8`
 ui_page_limit_step, Step interval of the page limit input field, u32, `4`
-db_start_local, Wether to start a local SurrealDB instance, bool, `true`
-db_cmd, SurrealDB command to start local instance, string, `surreal`
-db_adr, The address of the database, string, `ws://localhost:8001`
+db_adr, The address of the database, string, `rocksdb:./data/bgcat.db`
 db_ns, Database namespace, string, `bgcat`
 db_name, Database name, string, `bgcat`
-db_user, Database authentication username, string, `root`
-db_pass, Database authentication password, string, `root`
+db_user, Database authentication username, string, optional
+db_pass, Database authentication password, string, optional
 log_level, The log level to show in console, "string (`error`, `warn`, `info`, `debug`)", `info`
 |===
 

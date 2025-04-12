@@ -1,16 +1,10 @@
 FROM cgr.dev/chainguard/wolfi-base:latest
 
 ARG TARGETARCH
-# renovate: datasource=github-tags depName=surrealdb/surrealdb
-ARG SURREAL_VERSION="v2.2.2"
-
-ENV BGCAT_DB_CMD="/app/surreal"
 
 WORKDIR /app
 
-RUN apk add --no-cache curl libstdc++
-RUN curl --proto '=https' --tlsv1.2 -sSf https://install.surrealdb.com | sh -s -- --version $SURREAL_VERSION /app
-RUN rm /tmp/* && chown nobody:nobody surreal
+RUN apk add --no-cache libstdc++
 
 COPY static static
 COPY templates templates
