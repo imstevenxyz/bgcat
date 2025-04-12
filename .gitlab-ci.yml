@@ -38,11 +38,13 @@ variables:
 build-binary:
   stage: build
   image: rust:1.86.0-slim
+  timeout: 3h
   artifacts:
     expire_in: 30m
     paths:
       - ${CI_PROJECT_DIR}/builds/*/release/bgcat
   cache:
+    when: always
     key: cargo-build
     paths:
       - ${CI_PROJECT_DIR}/builds
@@ -51,12 +53,10 @@ build-binary:
   variables:
     TARGETS: "x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu"
     CARGO_HOME: "${CI_PROJECT_DIR}/cargo"
-  before_script:
-    - apt-get update
-    - apt-get install -y gcc-aarch64-linux-gnu
-    - rustup target add $TARGETS
   script:
-    - apt update && apt install -y gcc-aarch64-linux-gnu
+    - apt-get update
+    - apt-get install -y build-essential cmake clang libclang-dev g++-aarch64-linux-gnu
+    - rustup component add rustfmt
     - rustup target add $TARGETS
     - |
       for TARGET in $TARGETS; do

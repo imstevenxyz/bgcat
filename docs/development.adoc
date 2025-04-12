@@ -7,12 +7,29 @@
 
 = Development guide
 
+== Building
+
+1. Install link:https://doc.rust-lang.org/cargo/getting-started/installation.html[Rust]
+2. Download this repo
+3. Build BGCat for your native architecture:
++
+[source, bash]
+----
+cargo build --release
+----
+4. Run the build binary:
++
+[source, bash]
+----
+./target/release/bgcat
+----
+
 == Building and running in a container
 
 [source, console]
 ----
-cargo build --release --target x86_64-unknown-linux-gnu --target-dir ./builds
-ln -sr ./builds/x86_64-unknown-linux-gnu ./builds/amd64
+cargo build --release --target x86_64-unknown-linux-gnu
+ln -sr ./target/x86_64-unknown-linux-gnu ./builds/amd64
 buildah build --file container/Containerfile -t bgcat:dev .
 podman run --rm --name bgcat -p 8000:8000 -e BGCAT_ADMIN_TOKEN=password -e BGCAT_SECRET=really_long_super_secret_token localhost/bgcat:dev
 ----
