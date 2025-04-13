@@ -10,4 +10,6 @@ pub struct ErrorMessageResponse {
 pub struct StatisticsResponse {
     pub boardgames: u32,
     pub expansions: u32,
+    pub boardgames_available: u32,
+    pub boardgames_unavailable: u32,
 }

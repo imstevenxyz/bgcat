@@ -24,6 +24,7 @@ pub struct BGMultiPartForm {
     pub min_playtime: Text<u16>,
     pub max_playtime: Text<u16>,
     pub playtime_no_limit: Option<Text<String>>,
+    pub available: Option<Text<String>>,
     pub meta_add_expansion: Option<Text<String>>,
     #[multipart(rename = "expansions[][title]")]
     pub expansion_titles: Vec<Text<String>>,
@@ -72,6 +73,7 @@ pub struct BGForm {
     pub min_playtime: Option<u16>,
     pub max_playtime: Option<u16>,
     pub playtime_no_limit: Option<bool>,
+    pub available: Option<bool>,
     pub expansions: Vec<BGExpansionForm>,
 }
 
@@ -108,6 +110,16 @@ impl From<BGMultiPartForm> for BGForm {
             _ => false,
         };
 
+        let available = match form
+            .available
+            .unwrap_or(Text("off".to_string()))
+            .into_inner()
+            .as_str()
+        {
+            "on" => true,
+            _ => false,
+        };
+
         BGForm {
             title: Some(form.title.0),
             image_url: Some("".to_string()),
@@ -117,6 +129,7 @@ impl From<BGMultiPartForm> for BGForm {
             min_playtime: Some(form.min_playtime.0),
             max_playtime: Some(form.max_playtime.0),
             playtime_no_limit: Some(playtime_no_limit),
+            available: Some(available),
             expansions: exp,
         }
     }
@@ -140,6 +153,7 @@ impl From<BoardGame> for BGForm {
             min_playtime: Some(bg.min_playtime),
             max_playtime: Some(bg.max_playtime),
             playtime_no_limit: Some(bg.playtime_no_limit),
+            available: Some(bg.available),
             expansions: exps,
         }
     }
@@ -173,16 +187,27 @@ impl From<BGMultiPartForm> for BoardGame {
             _ => false,
         };
 
+        let available = match form
+            .available
+            .unwrap_or(Text("off".to_string()))
+            .into_inner()
+            .as_str()
+        {
+            "on" => true,
+            _ => false,
+        };
+
         BoardGame {
             uid: None,
             title: form.title.0,
             image_url: "assets/placeholder.webp".to_string(),
             min_players: form.min_players.0,
             max_players: form.max_players.0,
-            players_no_limit: players_no_limit,
+            players_no_limit,
             min_playtime: form.min_playtime.0,
             max_playtime: form.max_playtime.0,
-            playtime_no_limit: playtime_no_limit,
+            playtime_no_limit,
+            available,
             expansions: exp,
             bgg_id: None,
         }

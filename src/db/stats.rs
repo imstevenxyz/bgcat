@@ -7,9 +7,13 @@ use crate::web::responses::StatisticsResponse;
 pub async fn get_all_statistics(db: &SurrealDBRepo) -> Result<StatisticsResponse, Error> {
     let boardgames = get_total_boardgame_count(db).await?;
     let expansions = get_total_expansion_count(db).await?;
+    let boardgames_available = get_total_boardgame_available_count(db).await?;
+    let boardgames_unavailable = boardgames - boardgames_available;
     Ok(StatisticsResponse {
         boardgames,
         expansions,
+        boardgames_available,
+        boardgames_unavailable,
     })
 }
 
@@ -26,6 +30,16 @@ pub async fn get_total_expansion_count(db: &SurrealDBRepo) -> Result<u32, Error>
     let count: Vec<Count> = db
         .client
         .query("SELECT count(expansions) FROM boardgame")
+        .await?
+        .take(0)?;
+    let total: u32 = count.iter().map(|count| count.count).sum();
+    Ok(total)
+}
+
+pub async fn get_total_boardgame_available_count(db: &SurrealDBRepo) -> Result<u32, Error> {
+    let count: Vec<Count> = db
+        .client
+        .query("SELECT count() FROM boardgame WHERE available")
         .await?
         .take(0)?;
     let total: u32 = count.iter().map(|count| count.count).sum();

@@ -1,38 +1,64 @@
 #boardgame {
-    max-width: 60rem;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+  font-size: 1.8rem;
+  color: var(--text);
 }
 
 #boardgame > div {
-    margin-top: 1rem;
+  margin-top: 1rem;
+}
+
+#boardgame h3 {
+  font-size: 3rem;
+  margin: 1rem 0;
+  word-wrap: break-word;
+}
+
+#boardgame p {
+  margin: 0.5rem 0;
+}
+
+#boardgame p#unavailable {
+  visibility: hidden;
+  color: var(--text-form);
+  background-color: var(--background-warning);
+  border-radius: 3rem;
+  padding: 0.2rem 0.8rem;
+  margin: 0.5rem;
+  float: right;
+}
+
+#boardgame p#unavailable.active {
+  visibility: visible;
 }
 
 #boardgame i {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 #boardgame img {
-    margin: 0 auto;
-    object-fit: scale-down;
-    border-radius: 0.8rem;
-    background: var(--background-item);
-    max-width: 25rem;
+  margin: 0 auto;
+  object-fit: scale-down;
+  border-radius: 0.8rem;
+  background: var(--background-item);
+  max-width: 25rem;
 }
 
 #boardgame #info {
-    text-align: left;
+  text-align: left;
 }
 
 #boardgame #expansions {
-    text-align: left;
+  text-align: left;
 }
 
 #boardgame #expansions .expansion {
-    background-color: var(--background-item);
-    height: fit-content;
-    margin: 1rem;
-    padding: 1rem 1rem;
-    border-radius: 5px;
+  background-color: var(--background-item);
+  height: fit-content;
+  margin: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 5px;
 }

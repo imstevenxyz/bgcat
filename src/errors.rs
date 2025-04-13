@@ -100,7 +100,7 @@ impl actix_web::error::ResponseError for BGCError<{ BGCErrorType::WEB as u8 }> {
                     "status_msg",
                     &self.status_code().canonical_reason().unwrap_or("Unknown"),
                 );
-                let render = tera.render("error.html", &tera_ctx).unwrap();
+                let render = tera.render("error.html.tera", &tera_ctx).unwrap();
                 HttpResponse::build(self.status_code()).body(render)
             }
         }

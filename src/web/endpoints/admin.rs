@@ -21,7 +21,8 @@ pub fn setup() -> Scope {
         .service(bg_create)
         .service(bg_update_form)
         .service(bg_update)
-        .service(bg_delete);
+        .service(bg_delete)
+        .service(bg_available);
     scope
 }
 
@@ -51,7 +52,7 @@ async fn index(
 fn admin_auth_form() -> WEBResult {
     let mut tera_ctx = Context::new();
     tera_ctx.clone_from(&TERA_C);
-    let render = TERA.render("pages/auth.html", &tera_ctx).unwrap();
+    let render = TERA.render("pages/auth.html.tera", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
 
@@ -78,7 +79,7 @@ async fn admin_index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>)
     tera_ctx.insert("pagination_count", &page_count);
     tera_ctx.insert("boardgames", &boardgames);
     tera_ctx.insert("statistics", &statistics);
-    let render = TERA.render("pages/admin.html", &tera_ctx).unwrap();
+    let render = TERA.render("pages/admin.html.tera", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
 
@@ -107,6 +108,7 @@ async fn bg_create_form(session: Session) -> WEBResult {
         min_playtime: None,
         max_playtime: None,
         playtime_no_limit: None,
+        available: Some(true),
         expansions: Vec::new(),
     };
 
@@ -114,7 +116,7 @@ async fn bg_create_form(session: Session) -> WEBResult {
     tera_ctx.clone_from(&TERA_C);
     tera_ctx.insert("form", &form);
     tera_ctx.insert("formtype", "create");
-    let render = TERA.render("pages/bg_form.html", &tera_ctx).unwrap();
+    let render = TERA.render("pages/bg_form.html.tera", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
 
@@ -141,7 +143,7 @@ async fn bg_create_add_expansion_form(form: BGMultiPartForm) -> WEBResult {
     tera_ctx.clone_from(&TERA_C);
     tera_ctx.insert("form", &form);
     tera_ctx.insert("formtype", "create");
-    let render = TERA.render("pages/bg_form.html", &tera_ctx).unwrap();
+    let render = TERA.render("pages/bg_form.html.tera", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
 
@@ -180,7 +182,7 @@ async fn bg_update_form(
             tera_ctx.clone_from(&TERA_C);
             tera_ctx.insert("form", &form);
             tera_ctx.insert("formtype", "update");
-            let render = TERA.render("pages/bg_form.html", &tera_ctx).unwrap();
+            let render = TERA.render("pages/bg_form.html.tera", &tera_ctx).unwrap();
             Ok(HttpResponse::Ok().body(render))
         }
     }
@@ -219,7 +221,7 @@ async fn bg_update_add_expansion_form(bg: BoardGame, form: BGMultiPartForm) -> W
     tera_ctx.clone_from(&TERA_C);
     tera_ctx.insert("form", &form);
     tera_ctx.insert("formtype", "update");
-    let render = TERA.render("pages/bg_form.html", &tera_ctx).unwrap();
+    let render = TERA.render("pages/bg_form.html.tera", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
 
@@ -267,5 +269,24 @@ async fn bg_delete(session: Session, path: Path<String>, db: Data<SurrealDBRepo>
         Ok(HttpResponse::Found()
             .append_header(("Location", "/admin"))
             .finish())
+    }
+}
+
+#[post("/available/{uid}")]
+async fn bg_available(session: Session, path: Path<String>, db: Data<SurrealDBRepo>) -> WEBResult {
+    is_authenticated(&session)?;
+
+    let uid = path.into_inner();
+    let boardgame: Option<BoardGame> = crud::boardgame_read(&db, &uid).await?;
+
+    match boardgame {
+        None => Err(BGCError::NotFound("Boardgame not found".to_string())),
+        Some(mut boardgame) => {
+            boardgame.available = !boardgame.available;
+            crud::boardgame_update(&db, boardgame).await?;
+            Ok(HttpResponse::Found()
+                .append_header(("Location", "/admin"))
+                .finish())
+        }
     }
 }
