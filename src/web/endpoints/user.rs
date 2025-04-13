@@ -48,7 +48,7 @@ async fn index(mut params: Query<BoardGameQuery>, db: Data<SurrealDBRepo>) -> WE
     tera_ctx.insert("pagination_count", &page_count);
     tera_ctx.insert("ui_page_limit_step", &SETTINGS.ui_page_limit_step);
     tera_ctx.insert("boardgames", &boardgames);
-    let render = TERA.render("pages/index.html", &tera_ctx).unwrap();
+    let render = TERA.render("pages/index.html.tera", &tera_ctx).unwrap();
     Ok(HttpResponse::Ok().body(render))
 }
 
@@ -63,7 +63,7 @@ async fn boardgame(path: Path<String>, db: Data<SurrealDBRepo>) -> WEBResult {
             let mut tera_ctx = Context::new();
             tera_ctx.clone_from(&TERA_C);
             tera_ctx.insert("boardgame", &boardgame);
-            let render = TERA.render("pages/bg.html", &tera_ctx).unwrap();
+            let render = TERA.render("pages/bg.html.tera", &tera_ctx).unwrap();
             Ok(HttpResponse::Ok().body(render))
         }
     }

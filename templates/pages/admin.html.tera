@@ -1,5 +1,5 @@
-{% import "macros/pagination.html" as pagination %}
-{% extends "base.html" %}
+{% import "macros/pagination.html.tera" as pagination %}
+{% extends "base.html.tera" %}
 {% block head %}
 <link rel="stylesheet" href="/static/css/admin.css?v={{ css_ver }}">
 {% endblock head %}
@@ -27,6 +27,10 @@
             <p>Boardgames</p>
             <p>{{ statistics.boardgames }}</p>
           </article>
+          <article class="statistic" id="availability">
+            <p>Availability</p>
+            <p>{{ statistics.boardgames_available }} A | {{ statistics.boardgames_unavailable}} NA</p>
+          </article>
           <article class="statistic" id="expansions">
             <p>Expansions</p>
             <p>{{ statistics.expansions }}</p>
@@ -46,6 +50,9 @@
               </p>
             </div>
             <div class="flex-end">
+              <form action="/admin/available/{{ boardgame.uid }}" method="post">
+                <button type="submit" id="{% if boardgame.available %}available{% else %}unavailable{% endif %}"/>
+              </form>
               <form action="/admin/edit/{{ boardgame.uid }}" method="get">
                 <button type="submit" id="edit">
                   <i class="fas fa-edit fa-fw"></i> edit

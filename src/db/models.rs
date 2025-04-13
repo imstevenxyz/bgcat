@@ -14,13 +14,18 @@ pub struct BoardGame {
     #[serde(default)]
     pub max_players: u8,
     #[serde(default)]
+    #[schema(default = false)]
     pub players_no_limit: bool,
     #[serde(default)]
     pub min_playtime: u16,
     #[serde(default)]
     pub max_playtime: u16,
     #[serde(default)]
+    #[schema(default = false)]
     pub playtime_no_limit: bool,
+    #[serde(default)]
+    #[schema(default = true)]
+    pub available: bool,
     #[serde(default)]
     pub expansions: Vec<BoardGameExpansion>,
     pub bgg_id: Option<String>,
@@ -58,6 +63,7 @@ pub enum DbQueryField {
     MinPlaytime,
     MaxPlaytime,
     Genre,
+    Available,
 }
 
 impl fmt::Display for DbQueryField {
@@ -69,6 +75,7 @@ impl fmt::Display for DbQueryField {
             DbQueryField::MinPlaytime => write!(f, "min_playtime"),
             DbQueryField::MaxPlaytime => write!(f, "max_playtime"),
             DbQueryField::Genre => write!(f, "genre"),
+            DbQueryField::Available => write!(f, "available"),
         }
     }
 }

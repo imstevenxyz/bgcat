@@ -1,89 +1,90 @@
-#content{
-    padding: 3rem 0;
-    text-align: left;
+#content {
+  padding: 3rem 0;
+  text-align: left;
 }
 
 #boardgame-form {
-    max-width: 60rem;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
 }
 
 #boardgame-form img {
-    margin: 0 auto;
-    object-fit: scale-down;
-    border-radius: 0.8rem;
-    background: var(--background-item);
-    max-width: 25rem;
+  margin: 0 auto;
+  object-fit: scale-down;
+  border-radius: 0.8rem;
+  background: var(--background-item);
+  max-width: 25rem;
 }
 
 #boardgame-form form {
-    text-align: left;
+  text-align: left;
 }
 
 @media screen and (max-width: 600px) {
-    #boardgame-form label:nth-of-type(1){
-        display: block;
-    }
+  #boardgame-form label:nth-of-type(1) {
+    display: block;
+  }
 }
 
 #boardgame-form label {
-    margin-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 #boardgame-form button {
-    display: inline-block;
+  display: inline-block;
 }
 
 #boardgame-form button[type="submit"] {
-    background-color: var(--background-good);
+  background-color: var(--background-good);
 }
 
 #boardgame-form input[type="text"] {
-    width: 100%;
+  width: 100%;
 }
 
 #boardgame-form input[type="number"] {
-    max-width: 8rem;
-    text-align: center;
+  max-width: 8rem;
+  text-align: center;
 }
 
 #boardgame-form input[type="checkbox"] {
-    height: auto;
+  height: auto;
 }
 
 #boardgame-form #control {
-    text-align: right;
-    vertical-align: middle;
+  text-align: right;
+  vertical-align: middle;
 }
 
 #boardgame-form #exp-control {
-    display: inline-block;
+  display: inline-block;
 }
 
-#boardgame-form div, .exp div {
-    padding: 0.5rem 0;
+#boardgame-form div,
+.exp div {
+  padding: 0.5rem 0;
 }
 
 #boardgame-form .exp {
-    background-color: var(--background-item);
-    height: fit-content;
-    margin: 1rem;
-    padding: 1rem 1rem;
-    border-radius: 5px;
+  background-color: var(--background-item);
+  height: fit-content;
+  margin: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 5px;
 }
 
 .exp div {
-    background-color: var(--background-item);
-    height: fit-content;
-    margin: 0 1rem;
+  background-color: var(--background-item);
+  height: fit-content;
+  margin: 0 1rem;
 }
 
 .exp #exp-del-control {
-    text-align: right;
+  text-align: right;
 }
 
 .exp button#exp-del {
-    background-color: var(--background-warning);
+  background-color: var(--background-bad);
 }

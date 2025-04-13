@@ -1,38 +1,38 @@
 form#auth {
-    text-align: left;
-    background-color: var(--background-warning);
-    width: 80%;
-    max-width: 50rem;
-    height: fit-content;
-    margin: 0 auto;
-    border-radius: 10px;
-    padding: 2rem;
-    color: var(--text-header);
+  text-align: left;
+  background-color: var(--background-bad);
+  width: 80%;
+  max-width: 50rem;
+  height: fit-content;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 2rem;
+  color: var(--text-header);
 }
 
 form#auth p {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 form#auth input {
-    width: 80%;
-    margin: 0;
-    border-radius: 5px 0 0 5px;
+  width: 80%;
+  margin: 0;
+  border-radius: 5px 0 0 5px;
 }
 
 form#auth button {
-    width: 20%;
-    margin: 0;
-    border-radius: 0 5px 5px 0;
+  width: 20%;
+  margin: 0;
+  border-radius: 0 5px 5px 0;
 }
 
 @media screen and (max-width: 600px) {
-    form#auth input {
-        width: 100%;
-        border-radius: 5px;
-    }
-    form#auth button {
-        margin: 1rem 0;
-        border-radius: 5px;
-    }
+  form#auth input {
+    width: 100%;
+    border-radius: 5px;
+  }
+  form#auth button {
+    margin: 1rem 0;
+    border-radius: 5px;
+  }
 }

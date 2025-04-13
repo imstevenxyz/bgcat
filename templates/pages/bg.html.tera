@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html.tera" %}
 {% block head %}
 <link rel="stylesheet" href="/static/css/bg.css?v={{ css_ver }}">
 {% endblock head %}
@@ -11,8 +11,10 @@
         <img src="/{{ boardgame.image_url }}" alt="{{ boardgame.title }}"/>
         <div id="info">
             <h3>{{ boardgame.title }}</h3>
+            <p id="unavailable" class="{% if not boardgame.available %}active{% endif %}">unavailable</p>
             <p><i class="fas fa-users fa-fw"></i>Players: {{ boardgame.min_players -}} {% if boardgame.min_players != boardgame.max_players %} &mdash; {{ boardgame.max_players -}} {% endif %} {%- if boardgame.players_no_limit -%} + {% endif %}</p>
             <p><i class="far fa-clock fa-fw"></i>Playtime: {{ boardgame.min_playtime -}} {% if boardgame.min_playtime != boardgame.max_playtime %} &mdash; {{ boardgame.max_playtime -}} {% endif %} {%- if boardgame.playtime_no_limit -%} + {% endif %} min</p>
+            <p><i class="fas fa-warehouse fa-fw"></i>Available: {% if boardgame.available %}yes{% else %}no{% endif %}</p>
         </div>
         <div id="expansions">
           {% if boardgame.expansions %}<h4>Expansions:</h4>{% endif %}

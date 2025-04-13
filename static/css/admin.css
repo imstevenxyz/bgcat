@@ -1,128 +1,164 @@
 .flex-bar {
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .flex-start {
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
-    flex-grow: 1;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-grow: 1;
+  flex-wrap: wrap;
 }
 
 .flex-end {
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-end;
-    flex-grow: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  flex-grow: 1;
 }
 
 #menu {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 #menu #create {
-    background-color: var(--background-good);
+  background-color: var(--background-good);
 }
 
 #menu .statistic {
-    color: var(--text-form);
-    margin: 0 1rem;
-    padding: 0.5rem;
-    border-radius: 5px;
+  color: var(--text-form);
+  margin: 0 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 
-#menu .statistic:nth-of-type(1) {
-    background-color: var(--accent-one);
+#menu .statistic#boardgames {
+  background-color: var(--accent-one);
 }
 
-#menu .statistic:nth-of-type(2) {
-    background-color: var(--accent-two);
+#menu .statistic#availability {
+  background-color: var(--accent-one);
 }
 
+#menu .statistic#expansions {
+  background-color: var(--accent-two);
+}
 
 #boardgame-container {
-    position: relative;
+  position: relative;
 }
 
 #boardgame-list {
-    list-style: none;
-    margin: 3rem 0;
+  list-style: none;
+  margin: 3rem 0;
 }
 
 .boardgame {
-    color: var(--text);
-    background-color: var(--background-item);
-    width: 80%;
-    max-width: 100rem;
-    box-shadow: 0 2px 15px 0 rgba(0,0,0,0.1);
-    border-radius: 0.4rem;
-    padding: 1.3rem;
+  color: var(--text);
+  background-color: var(--background-item);
+  width: 80%;
+  max-width: 100rem;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 0.4rem;
+  padding: 1.3rem;
 }
 
 .boardgame.hidden {
-    display: none;
+  display: none;
 }
 
 .boardgame p {
-    line-height: 2rem;
-    margin: 0 1rem;
+  line-height: 2rem;
+  margin: 0 1rem;
 }
 
 .boardgame h4 {
-    display: inline-block;
-    color: var(--text);
-    line-height: 2rem;
-    margin: 0 1rem;
+  display: inline-block;
+  color: var(--text);
+  line-height: 2rem;
+  margin: 0 1rem;
+  text-align: left;
+  word-wrap: anywhere;
 }
 
 .boardgame #uid {
-    display: inline-block;
-    font-size: 1rem;
-    color: gray;
-    user-select: all;
+  display: inline-block;
+  font-size: 1rem;
+  color: gray;
+  user-select: all;
 }
 
 .boardgame #uid .tooltip {
-    user-select: none;
+  user-select: none;
 }
 
-.boardgame #delete {
-    background-color: var(--background-warning);
+.boardgame button#delete {
+  background-color: var(--background-bad);
+}
+
+.boardgame button#available,
+.boardgame button#unavailable {
+  width: 9rem;
+}
+
+.boardgame button#available {
+  background-color: var(--background-good);
+}
+
+.boardgame button#available:hover {
+  background-color: var(--background-warning);
+}
+
+.boardgame button#unavailable {
+  background-color: var(--background-warning);
+}
+
+.boardgame button#unavailable:hover {
+  background-color: var(--background-good);
+}
+
+.boardgame button#available::after,
+.boardgame button#unavailable:hover::after {
+  content: "available";
+}
+
+.boardgame button#available:hover::after,
+.boardgame button#unavailable::after {
+  content: "unavailable";
 }
 
 .boardgame button {
-    min-width: 8rem;
+  min-width: 8rem;
 }
 
 .boardgame button i {
-    margin-right: 0.3rem;
+  margin-right: 0.3rem;
 }
 
 #pagination-loader {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
 #pagination-loader-backdrop {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: inherit;
-    height: inherit;
-    background-color: var(--background);
-    opacity: 0.5;
-    z-index: 1;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: inherit;
+  height: inherit;
+  background-color: var(--background);
+  opacity: 0.5;
+  z-index: 1;
 }

@@ -1,5 +1,5 @@
-{% import "macros/pagination.html" as pagination %}
-{% extends "base.html" %}
+{% import "macros/pagination.html.tera" as pagination %}
+{% extends "base.html.tera" %}
 {% block head %}
 <link rel="stylesheet" href="/static/css/index.css?v={{ css_ver }}">
 {% endblock head %}
@@ -59,6 +59,7 @@
             <a href="/boardgame/{{ boardgame.uid }}">
               <h4>{{ boardgame.title }}</h4>
               <img src="{{ boardgame.image_url }}" alt="{{ boardgame.title }}"/>
+              <p id="unavailable" class="{% if not boardgame.available %}active{% endif %}">unavailable</p>
               <ul class="info">
                 <li>
                   <i class="fas fa-users fa-fw"></i>

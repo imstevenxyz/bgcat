@@ -1,172 +1,186 @@
 .pagination {
-    padding: 0 10rem;
+  padding: 0 10rem;
 }
 
 #boardgame-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: baseline;
-    gap: 2.5rem;
-    position: relative;
-    min-height: 20rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 2.5rem;
+  position: relative;
+  min-height: 20rem;
 }
 
-#boardgame-container article{
-    text-align: left;
-    width: 100%;
-    max-width: 30rem;
-    min-width: 20rem;
-    height: 40rem;
-    transition: 0.2s;
+#boardgame-container article {
+  text-align: left;
+  width: 100%;
+  max-width: 30rem;
+  min-width: 20rem;
+  height: 40rem;
+  transition: 0.2s;
 }
 
 #boardgame-container article:hover {
-    transform: scale(1.02)
+  transform: scale(1.02);
 }
 
 .boardgame {
-    color: var(--text);
+  color: var(--text);
+  font-size: 1.8rem;
 }
 
 .boardgame.hidden {
-    display: none;
+  display: none;
 }
 
 .boardgame a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .boardgame h4 {
-    font-size: 2rem;
-    margin: 1rem 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  font-size: 2rem;
+  margin: 1rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .boardgame img {
-    width: 100%;
-    height: 23rem;
-    object-fit: contain;
-    border-radius: 0.8rem;
-    background: var(--background-item);
+  width: 100%;
+  height: 23rem;
+  object-fit: contain;
+  border-radius: 0.8rem;
+  background: var(--background-item);
 }
 
 .boardgame .info {
-    list-style: none;
-    font-size: 1.8rem;
+  list-style: none;
 }
 
 .boardgame .info li {
-    margin: 0.5rem 0;
+  margin: 0.5rem 0;
 }
 
 .boardgame .info i {
-    margin: 0 0.4rem;
+  margin: 0 0.4rem;
+}
+
+.boardgame p#unavailable {
+  visibility: hidden;
+  color: var(--text-form);
+  background-color: var(--background-warning);
+  border-radius: 3rem;
+  padding: 0.2rem 0.8rem;
+  margin: 0.5rem;
+  float: right;
+}
+
+.boardgame p#unavailable.active {
+  visibility: visible;
 }
 
 form#query {
-    width: 100%;
-    text-align: right;
+  width: 100%;
+  text-align: right;
 }
 
 form#query button {
-    background-color: var(--background-good);
+  background-color: var(--background-good);
 }
 
 form#query button[form="query-reset"] {
-    background-color: var(--background-warning);
+  background-color: var(--background-bad);
 }
 
 form#query div {
-    display: inline-block;
+  display: inline-block;
 }
 
 form#query #sort-direction {
-    display: none;
+  display: none;
 }
 
 form#query #sort-direction + label::before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 0.5rem;
-    content: "\f15d";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  margin-right: 0.5rem;
+  content: "\f15d";
 }
 
 form#query #sort-direction + label::after {
-    content: "Asc";
+  content: "Asc";
 }
 
 form#query #sort-direction:checked + label::before {
-    content: "\f881";
+  content: "\f881";
 }
 
 form#query #sort-direction:checked + label::after {
-    content: "Desc";
+  content: "Desc";
 }
 
 form#query #filters {
-    display: none;
+  display: none;
 }
 
 form#query #filters + label:before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    content: "\f0d7";
-    margin: 0 0.5rem;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f0d7";
+  margin: 0 0.5rem;
 }
 
 form#query #filters:checked + label:before {
-    content: "\f0d8";
+  content: "\f0d8";
 }
 
 form#query #query-filters {
-    display: inline-block;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 1s;
-    margin-top: 1rem;
+  display: inline-block;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 1s;
+  margin-top: 1rem;
 }
 
 form#query #filters:checked ~ #query-filters {
-    max-height: 20rem;
+  max-height: 20rem;
 }
 
 form#query #query-filters {
-    width: 100%;
+  width: 100%;
 }
 
 form#query #query-filters div {
-    width: 100%;
+  width: 100%;
 }
 
 form#query .number {
-    width: 10rem;
+  width: 10rem;
 }
 
 #pagination-loader {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
 #pagination-loader-backdrop {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: inherit;
-    height: inherit;
-    background-color: var(--background);
-    opacity: 0.5;
-    z-index: 1;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: inherit;
+  height: inherit;
+  background-color: var(--background);
+  opacity: 0.5;
+  z-index: 1;
 }
