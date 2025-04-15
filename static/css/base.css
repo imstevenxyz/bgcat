@@ -407,13 +407,20 @@ input[type="checkbox"].switch {
 
 .pagination {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination #pagination-prev,
+.pagination #pagination-next {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .pagination #pagination-numbers {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
 }
 
