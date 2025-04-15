@@ -16,11 +16,6 @@
               <i class="fas fa-plus fa-fw"></i> Add Boardgame
             </button>
           </form>
-          <!-- <form action="/admin/export">
-            <button type="submit" id="export">
-              <i class="fas fa-file-export fa-fw"></i> Export Database
-            </button>
-          </form> -->
         </div>
         <div class="flex-end">
           <article class="statistic" id="boardgames">
@@ -51,7 +46,7 @@
             </div>
             <div class="flex-end">
               <form action="/admin/available/{{ boardgame.uid }}" method="post">
-                <button type="submit" id="{% if boardgame.available %}available{% else %}unavailable{% endif %}"/>
+                <button type="submit" class="availability {% if boardgame.available %}available{% else %}unavailable{% endif %}"/>
               </form>
               <form action="/admin/edit/{{ boardgame.uid }}" method="get">
                 <button type="submit" id="edit">
@@ -59,7 +54,7 @@
                 </button>
               </form>
               <form action="/admin/delete/{{ boardgame.uid }}" method="post">
-                <button type="submit" id="delete">
+                <button type="submit" class="delete" onclick="return confirm('Delete boardgame?');">
                   <i class="fas fa-trash fa-fw"></i> delete
                 </button>
               </form>

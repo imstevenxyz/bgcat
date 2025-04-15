@@ -96,38 +96,37 @@
   user-select: none;
 }
 
-.boardgame button#delete {
+.boardgame button.delete {
   background-color: var(--background-bad);
 }
 
-.boardgame button#available,
-.boardgame button#unavailable {
+.boardgame button.availability {
   width: 9rem;
 }
 
-.boardgame button#available {
+.boardgame button.availability.available {
   background-color: var(--background-good);
 }
 
-.boardgame button#available:hover {
+.boardgame button.availability.available:hover {
   background-color: var(--background-warning);
 }
 
-.boardgame button#unavailable {
+.boardgame button.availability.unavailable {
   background-color: var(--background-warning);
 }
 
-.boardgame button#unavailable:hover {
+.boardgame button.availability.unavailable:hover {
   background-color: var(--background-good);
 }
 
-.boardgame button#available::after,
-.boardgame button#unavailable:hover::after {
+.boardgame button.availability.available::after,
+.boardgame button.availability.unavailable:hover::after {
   content: "available";
 }
 
-.boardgame button#available:hover::after,
-.boardgame button#unavailable::after {
+.boardgame button.availability.available:hover::after,
+.boardgame button.availability.unavailable::after {
   content: "unavailable";
 }
 

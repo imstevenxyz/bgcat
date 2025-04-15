@@ -1,22 +1,24 @@
+"use strict";
+
 /*
  * Register form expansions
  */
 (function () {
-  modify_bg_form();
-  modify_exps();
+  modifyBoardgameForm();
+  modifyBoardgameExpansionButtons();
   console.log("bgcat: Registered add expansion button");
 })();
 
 /*
  * Replace `exp-add` checkbox with a button
  */
-function modify_bg_form() {
+function modifyBoardgameForm() {
   const button = document.createElement("button");
   button.innerText = "Add expansion";
   button.id = "exp-add";
   button.type = "button";
   button.addEventListener("click", () => {
-    add_expansion();
+    addBoardgameExpansion();
   });
   document.getElementById("exp-control").replaceWith(button);
 }
@@ -24,27 +26,29 @@ function modify_bg_form() {
 /*
  * Replace `exp-del` checkbox with a button
  */
-function modify_exps() {
+function modifyBoardgameExpansionButtons() {
   document.querySelectorAll("#exp-del-control").forEach((form) => {
     const button = document.createElement("button");
     button.innerHTML = '<i class="fas fa-solid fa-trash"></i> delete';
     button.id = "exp-del";
     button.type = "button";
     button.addEventListener("click", () => {
-        if(confirm(`Delete expansion?`)){
-            button.parentElement.parentElement.remove();
-        }
+      if (confirm("Delete expansion?")) {
+        button.parentElement.parentElement.remove();
+      }
     });
     form.replaceChildren(button);
-  })
+  });
 }
 
 /*
  * Add new expanion to the form
  */
-function add_expansion() {
+function addBoardgameExpansion() {
   container = document.getElementById("exp-container");
-  container.insertAdjacentHTML("beforeend",`
+  container.insertAdjacentHTML(
+    "beforeend",
+    `
     <div class="exp">
       <h4>Expansion:</h4>
       <div>
@@ -53,6 +57,7 @@ function add_expansion() {
       </div>
       <div id="exp-del-control"></div>
     </div>
-  `);
-  modify_exps();
+  `,
+  );
+  modifyBoardgameExpansionButtons();
 }
