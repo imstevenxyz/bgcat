@@ -49,11 +49,11 @@ function setupBoardgameQueryForm() {
 
 function filterBoardgames() {
   pagination.clear();
-  pagination.show_loader();
+  pagination.showLoader();
   boardgame_query = generateBoardgameQuery();
   fetchBoardgames(0).then((pageCount) => {
-    pagination.hide_loader();
-    pagination.update_context(0, pageCount);
+    pagination.hideLoader();
+    pagination.updateContext(0, pageCount);
   });
 }
 

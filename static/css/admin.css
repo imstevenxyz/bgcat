@@ -101,33 +101,17 @@
 }
 
 .boardgame button.availability {
-  width: 9rem;
+  width: 10rem;
 }
 
-.boardgame button.availability.available {
+.boardgame button.availability[slider-hover-content="unavailable"],
+.boardgame button.availability[slider-hover-content="available"]:before {
   background-color: var(--background-good);
 }
 
-.boardgame button.availability.available:hover {
+.boardgame button.availability[slider-hover-content="available"],
+.boardgame button.availability[slider-hover-content="unavailable"]:before {
   background-color: var(--background-warning);
-}
-
-.boardgame button.availability.unavailable {
-  background-color: var(--background-warning);
-}
-
-.boardgame button.availability.unavailable:hover {
-  background-color: var(--background-good);
-}
-
-.boardgame button.availability.available::after,
-.boardgame button.availability.unavailable:hover::after {
-  content: "available";
-}
-
-.boardgame button.availability.available:hover::after,
-.boardgame button.availability.unavailable::after {
-  content: "unavailable";
 }
 
 .boardgame button {

@@ -290,8 +290,10 @@ select {
   cursor: pointer;
   border-radius: 5px;
   height: 3rem;
+  line-height: 3rem;
   color: var(--text-form);
   box-sizing: border-box;
+  overflow: hidden;
   border: none;
   margin: 0 0.5rem;
   padding: 0 1rem;
@@ -299,6 +301,7 @@ select {
 
 button {
   width: fit-content;
+  transition: 0.5s;
 }
 
 button:hover {
@@ -330,7 +333,7 @@ label {
 }
 
 /*
-  FORM SWITCH
+  FORM SWITCH CHECKBOX
 */
 
 label.switch {
@@ -367,6 +370,30 @@ input[type="checkbox"].switch:checked + label.switch {
 input[type="checkbox"].switch {
   position: absolute;
   visibility: hidden;
+}
+
+/*
+  FORM SLIDER BUTTON
+*/
+
+button.slider:before {
+  position: absolute;
+  opacity: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  content: attr(slider-hover-content);
+  transform: translateX(-100%);
+  transition: all 0.5s;
+}
+
+button.slider:hover:before {
+  opacity: 1;
+  color: var(--text-form);
+  background-color: var(--background-good);
+  transform: translateX(-10%);
 }
 
 /*
@@ -409,6 +436,13 @@ input[type="checkbox"].switch {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 500px) {
+  .pagination {
+    flex-direction: column;
+  }
 }
 
 .pagination #pagination-prev,
@@ -434,6 +468,7 @@ input[type="checkbox"].switch {
 
 .pagination a.active {
   background-color: var(--background-good);
+  cursor: default;
 }
 
 .pagination a:hover:not(.active) {
@@ -441,7 +476,7 @@ input[type="checkbox"].switch {
 }
 
 .pagination a.hidden {
-  display: none;
+  display: none !important;
 }
 
 /*

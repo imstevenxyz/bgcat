@@ -1,7 +1,3 @@
-.pagination {
-  padding: 0 10rem;
-}
-
 #boardgame-container {
   display: flex;
   flex-direction: row;
