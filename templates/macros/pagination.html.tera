@@ -11,7 +11,7 @@
   {% else %}
     {% set page_range_end = page + 3 %}
   {% endif %}
-  {% if page_count == 1 %}
+  {% if page_count <= 1 %}
     {% set hidden = "hidden" %}
   {% endif %}
   <div id="pagination-prev">

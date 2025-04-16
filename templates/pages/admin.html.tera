@@ -45,8 +45,15 @@
               </p>
             </div>
             <div class="flex-end">
+              {% if boardgame.available %}
+                {% set availability = "available" %}
+                {% set availability_not = "unavailable" %}
+              {% else %}
+                {% set availability = "unavailable" %}
+                {% set availability_not = "available" %}
+              {% endif %}
               <form action="/admin/available/{{ boardgame.uid }}" method="post">
-                <button type="submit" class="availability {% if boardgame.available %}available{% else %}unavailable{% endif %}"/>
+                <button type="submit" class="slider availability" slider-hover-content="{{ availability_not }}">{{ availability }}</button>
               </form>
               <form action="/admin/edit/{{ boardgame.uid }}" method="get">
                 <button type="submit" id="edit">

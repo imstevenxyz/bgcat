@@ -57,10 +57,10 @@ function setupLiveSearch() {
  */
 function filterBoardgames() {
   pagination.clear();
-  pagination.show_loader();
+  pagination.showLoader();
   fetchBoardgames(0).then((pageCount) => {
-    pagination.hide_loader();
-    pagination.update_context(0, pageCount);
+    pagination.hideLoader();
+    pagination.updateContext(0, pageCount);
   });
 }
 
@@ -75,6 +75,7 @@ async function fetchBoardgames(pageIndex) {
     boardgames.forEach((boardgame) => {
       addBoardgame(boardgame, pageIndex);
     });
+    modifyAvailabilityButtons();
     return response.headers.get("pagination-count");
   });
 }
@@ -83,9 +84,10 @@ async function fetchBoardgames(pageIndex) {
  * Add boardgame to the item list
  */
 function addBoardgame(boardgame, pageIndex) {
-  let button_available_class = boardgame.available
-    ? "available"
-    : "unavailable";
+  let button_availability = boardgame.available ? "available" : "unavailable";
+  let button_availability_not = boardgame.available
+    ? "unavailable"
+    : "available";
 
   boardgameContainer.insertAdjacentHTML(
     "beforeend",
@@ -99,7 +101,7 @@ function addBoardgame(boardgame, pageIndex) {
       </div>
       <div class="flex-end">
         <form action="/admin/available/${boardgame.uid}" method="post">
-          <button type="submit" class="availability ${button_available_class}"/>
+          <button type="submit" class="slider availability" slider-hover-content="${button_availability_not}">${button_availability}</button>
         </form>
         <form action="/admin/edit/${boardgame.uid}" method="get">
           <button type="submit" id="edit">
@@ -127,12 +129,13 @@ function setBoardgameAvailability(button) {
       alert("Error: Unable to modify boardgame");
       return;
     }
-    if (button.classList.contains("available")) {
-      button.classList.remove("available");
-      button.classList.add("unavailable");
+    let availability = button.getAttribute("slider-hover-content");
+    if (availability == "available") {
+      button.setAttribute("slider-hover-content", "unavailable");
+      button.innerText = "available";
     } else {
-      button.classList.remove("unavailable");
-      button.classList.add("available");
+      button.setAttribute("slider-hover-content", "available");
+      button.innerText = "unavailable";
     }
   });
 }
